@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.GoodsMapper">
+	<resultMap id="BaseResultMap" type="com.pojo.Goods">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="productNo" property="productno" jdbcType="VARCHAR" />
+		<result column="productName" property="productname" jdbcType="VARCHAR" />
+		<result column="productType" property="producttype" jdbcType="VARCHAR" />
+		<result column="productStandard" property="productstandard"
+			jdbcType="VARCHAR" />
+		<result column="unit" property="unit" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, productNo, productName, productType, productStandard,
+		unit, price, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from goods
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="findGoodsCountByWhere" resultType="java.lang.Long"
+		parameterType="com.pojo.Goods">
+		select
+		count(1)
+		from goods
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="productno != null and productno != ''">
+			and productNo like CONCAT('%',#{productno},'%' )
+		</if>
+		<if test="productname != null and productname != ''">
+			and productName like CONCAT('%',#{productname},'%' )
+		</if>
+		<if test="producttype != null and  producttype != ''">
+			and productType = #{producttype}
+		</if>
+		<if test="productstandard != null and productstandard != ''">
+			and productStandard like CONCAT('%',#{productstandard},'%' )
+		</if>
+		<if test="unit != null and unit != ''">
+			and unit = #{unit}
+		</if>
+		<if test="price != null and price != ''">
+			and price = #{price}
+		</if>
+	</select>
+
+	<select id="selectGoodsByWhere" resultMap="BaseResultMap"
+		parameterType="com.pojo.Goods">
+		select
+		<include refid="Base_Column_List" />
+		from goods
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="productno != null and productno != ''">
+			and productNo like CONCAT('%',#{productno},'%' )
+		</if>
+		<if test="productname != null and productname != ''">
+			and productName like CONCAT('%',#{productname},'%' )
+		</if>
+		<if test="producttype != null and  producttype != ''">
+			and productType like CONCAT('%',#{producttype},'%' )
+		</if>
+		<if test="productstandard != null and productstandard != ''">
+			and productStandard like CONCAT('%',#{productstandard},'%' )
+		</if>
+		<if test="unit != null and unit != ''">
+			and unit = #{unit}
+		</if>
+		<if test="price != null and price != ''">
+			and price = #{price}
+		</if>
+	</select>
+
+	<select id="selectByWhere" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="productno != null and productno != ''">
+			and productNo like CONCAT('%',#{productno},'%' )
+		</if>
+		<if test="productname != null and productname != ''">
+			and productName like CONCAT('%',#{productname},'%' )
+		</if>
+		<if test="producttype != null and  producttype != ''">
+			and productType like CONCAT('%',#{producttype},'%' )
+		</if>
+		<if test="productstandard != null and productstandard != ''">
+			and productStandard like CONCAT('%',#{productstandard},'%' )
+		</if>
+		<if test="unit != null and unit != ''">
+			and unit = #{unit}
+		</if>
+		<if test="price != null and price != ''">
+			and price = #{price}
+		</if>
+		<if test="remark != null and remark != ''">
+			and remark like #{remark}
+		</if>
+		<if test="q != null and q != ''">
+			and productNo like #{q}
+		</if>
+
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from goods
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.pojo.Goods">
+		insert into goods (ID, productNo, productName,
+		productType, productStandard, unit, price,
+		remark)
+		values (#{id,jdbcType=INTEGER}, #{productno,jdbcType=VARCHAR},
+		#{productname,jdbcType=VARCHAR},
+		#{producttype,jdbcType=VARCHAR}, #{productstandard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR},
+		#{price,jdbcType=DECIMAL},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pojo.Goods">
+		insert into goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="productno != null">
+				productNo,
+			</if>
+			<if test="productname != null">
+				productName,
+			</if>
+			<if test="producttype != null">
+				productType,
+			</if>
+			<if test="productstandard != null">
+				productStandard,
+			</if>
+			<if test="unit != null">
+				unit,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="productno != null">
+				#{productno,jdbcType=VARCHAR},
+			</if>
+			<if test="productname != null">
+				#{productname,jdbcType=VARCHAR},
+			</if>
+			<if test="producttype != null">
+				#{producttype,jdbcType=VARCHAR},
+			</if>
+			<if test="productstandard != null">
+				#{productstandard,jdbcType=VARCHAR},
+			</if>
+			<if test="unit != null">
+				#{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pojo.Goods">
+		update goods
+		<set>
+			<if test="productno != null">
+				productNo = #{productno,jdbcType=VARCHAR},
+			</if>
+			<if test="productname != null">
+				productName = #{productname,jdbcType=VARCHAR},
+			</if>
+			<if test="producttype != null">
+				productType = #{producttype,jdbcType=VARCHAR},
+			</if>
+			<if test="productstandard != null">
+				productStandard = #{productstandard,jdbcType=VARCHAR},
+			</if>
+			<if test="unit != null">
+				unit = #{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pojo.Goods">
+		update goods
+		set productNo = #{productno,jdbcType=VARCHAR},
+		productName = #{productname,jdbcType=VARCHAR},
+		productType = #{producttype,jdbcType=VARCHAR},
+		productStandard = #{productstandard,jdbcType=VARCHAR},
+		unit = #{unit,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		remark = #{remark,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.pojo.Order">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
+		<result column="pill" property="pill" jdbcType="DECIMAL" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, orderNo, userId, count,
+		pill
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_order
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="findOrderCountByWhere" resultType="java.lang.Long"
+		parameterType="com.pojo.Order">
+		select
+		count(1)
+		from t_order
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="orderNo != null and orderNo != ''">
+			and orderNo like CONCAT('%',#{orderNo},'%' )
+		</if>
+		<if test="userId != null and userId != ''">
+			and userId like CONCAT('%',#{userId},'%' )
+		</if>
+		<if test="count != null and  count != ''">
+			and count = #{count}
+		</if>
+		<if test="pill != null and pill != ''">
+			and pill = #{pill}
+		</if>
+	</select>
+
+	<select id="selectOrderByWhere" resultMap="BaseResultMap"
+		parameterType="com.pojo.Order">
+		select
+		<include refid="Base_Column_List" />
+		from t_order
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="orderNo != null and orderNo != ''">
+			and orderNo like CONCAT('%',#{orderNo},'%' )
+		</if>
+		<if test="userId != null and userId != ''">
+			and userId like CONCAT('%',#{userId},'%' )
+		</if>
+		<if test="count != null and  count != ''">
+			and count like CONCAT('%',#{count},'%' )
+		</if>
+		<if test="pill != null and pill != ''">
+			and pill = #{pill}
+		</if>
+	</select>
+
+	<select id="selectByWhere" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_order
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="orderNo != null and orderNo != ''">
+			and orderNo like CONCAT('%',#{orderNo},'%' )
+		</if>
+		<if test="userId != null and userId != ''">
+			and userId like CONCAT('%',#{userId},'%' )
+		</if>
+		<if test="count != null and  count != ''">
+			and count like CONCAT('%',#{count},'%' )
+		</if>
+		<if test="pill != null and pill != ''">
+			and pill = #{pill}
+		</if>
+		<if test="q != null and q != ''">
+			and orderNo like #{q}
+		</if>
+
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_order
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.pojo.Order">
+		insert into t_order(ID, orderNo, userId,
+		count, pill)
+		values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR},
+		#{userId,jdbcType=INTEGER},
+		#{count,jdbcType=INTEGER},
+		#{pill,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pojo.Order">
+		insert into t_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="orderNo != null">
+				orderNo,
+			</if>
+			<if test="userId != null">
+				userId,
+			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="pill != null">
+				pill,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="count != null">
+				#{count,jdbcType=INTEGER},
+			</if>
+			<if test="pill != null">
+				#{pill,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pojo.Order">
+		update t_order
+		<set>
+			<if test="orderNo != null">
+				orderNo = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				userId = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="count != null">
+				count = #{count,jdbcType=INTEGER},
+			</if>
+			<if test="pill != null">
+				pill = #{pill,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pojo.Order">
+		update t_order
+		set orderNo = #{orderNo,jdbcType=VARCHAR},
+		userId = #{userId,jdbcType=INTEGER},
+		count = #{count,jdbcType=INTEGER},
+		pill = #{pill,jdbcType=DECIMAL},
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

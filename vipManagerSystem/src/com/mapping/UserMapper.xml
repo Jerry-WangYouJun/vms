@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.User" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="vip" property="vip" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID,  vip,  birthday, address, balance, sex, telephone, username, level ,score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByUserNoAndPwd" resultMap="BaseResultMap" parameterType="com.pojo.User" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where level = #{level}
+    and address = #{address}
+  </select>
+  
+  <select id="selectUserByWhere" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where 1=1
+       <if test="vip != null and vip != '' " >
+        and vip like concat(concat('%',#{vip}),'%') 
+      </if>
+      <if test="username != null and username != ''" >
+        and username like concat(concat('%',#{username}),'%') 
+      </if>
+     
+  </select>
+  
+    <select id="selectUserCountByWhere" resultType="java.lang.Long" parameterType="java.util.HashMap" >
+    select 
+    	count(*) 
+    from t_user
+    where 1=1
+        <if test="vip != null and vip != '' " >
+        and vip like concat(concat('%',#{vip}),'%') 
+      </if>
+      <if test="username != null and username != ''" >
+       and username like concat(concat('%',#{username}),'%') 
+      </if>
+  </select> 
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.User" >
+    insert into t_user(ID,  vip, 
+       birthday, address, 
+      balance, sex, telephone, 
+      username, level , score)
+    values (#{id,jdbcType=INTEGER},  #{vip,jdbcType=VARCHAR}, 
+       #{birthday,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=DOUBLE}, #{sex,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER} , #{score,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="vip != null" >
+        vip,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="vip != null" >
+        #{vip,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userno != null" >
+        #{userno,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.User" >
+    update t_user
+    <set >
+      <if test="vip != null" >
+        vip = #{vip,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.User" >
+    update t_user
+    set 
+      vip = #{vip,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE},
+      sex = #{sex,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      score=#{score,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
