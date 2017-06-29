@@ -81,7 +81,7 @@
 			$("#productstandard").val("");
 		}
 		function addOrder(){
-			var path = "${basePath}/init/order_add";
+			var path = "${basePath}/order/insertInit";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}

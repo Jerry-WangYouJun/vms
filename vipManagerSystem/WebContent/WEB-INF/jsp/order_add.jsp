@@ -37,14 +37,31 @@ textarea {
 			}
 		});
 	}
-	function changeColor(obj){
-		obj.style.backgroundColor='#6298E1';
-		obj.style.color='#000000';
-	}
 	
-	function changeColorBack(obj){
-		obj.style.backgroundColor='#6298E1';
-		obj.style.color="#000000";
+/* 	$(function(){
+		var str = ${model};
+		console.info(str.food);
+		for(var a = 0 ; a < str.drink.length ; a ++ ){
+			console.info(str.drink[a]);
+		}
+		
+	}); */
+	function change(obj){
+			$("#product_" + obj.id.split("_")[1]).empty();
+			var str = ${model};
+		 if(obj.value=='饮品'){
+			 var list = str.drink;
+			for(var i=0 ; i < list.length ; i ++){
+				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i] +"'>"+  list[i] +"</option>"); 
+				
+			}
+		 }else{
+			 var  list = str.food;
+				for(var i=0 ; i < list.length ; i ++){
+					$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i] +"'>"+ list[i] +"</option>"); 
+					
+				}
+		 }
 	}
 	//添加方法
 	function addtr(){
@@ -65,7 +82,8 @@ textarea {
 	    //添加列:日期
 	    var newNameTD=newTR.insertCell(1);
 	    //添加列内容
-		newNameTD.innerHTML = "<select style='width:70px;' name='way" + xuhao + "' id='way" + xuhao + "'>"
+		newNameTD.innerHTML = "<select style='width:70px;' name='type_" + xuhao + "' id='way_" + xuhao + "' onchange='change(this)'>"
+						+ " <option  value=''>请选择</option> "				
 						+ " <option  value='饮品'>饮品</option> "
 						 +" <option value='点心'>点心</option>  "
 						 +" <option value='特色'>特色</option>  "
@@ -73,8 +91,8 @@ textarea {
 	    //添加列:方式
 	    var newEmailTD=newTR.insertCell(2);
 	    //添加列内容
-	    newEmailTD.innerHTML = "<input  name='time" + xuhao + "' id='time" + xuhao + " size='19' />";
-
+	    newEmailTD.innerHTML =  "<select style='width:70px;' name='product_" + xuhao + "' id='product_" + xuhao + "' onchange='change(this)'>"
+		 +"  </select>";
 		//添加列:备注
 		var newTelTD = newTR.insertCell(3);
 		//添加列内容
@@ -125,7 +143,15 @@ textarea {
 						<option value="饮品">---饮品---</option>
 						<option value="点心">---点心---</option>
 						<option value="特色">---特色---</option>
-				</select></td>
+					</select>
+				</td>
+				<td><select id="productTypeCode" name="producttype">
+						<option value="">---请选择---</option>
+						<option value="饮品">---饮品---</option>
+						<option value="点心">---点心---</option>
+						<option value="特色">---特色---</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>商品名称：</td>

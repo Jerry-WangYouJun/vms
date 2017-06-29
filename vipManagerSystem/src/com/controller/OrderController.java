@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.core.model.Grid;
 import com.mapping.OrderMapper;
 import com.pojo.Order;
@@ -32,6 +34,28 @@ public class OrderController {
 	@RequestMapping("/query")
 	public Grid getSelectOrder(Order order ){
 		return this.orderService.findOrderList(order);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/insertInit")
+	public ModelAndView addInitOrder(){
+		Map<String,List<String>> model =new HashMap<String,List<String>>();
+		List<String>  list = new ArrayList();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		model.put("food",list);//userlist是个Arraylist之类的  
+		List<String>  list2 = new ArrayList();
+		list2.add("1");
+		list2.add("2");
+		list2.add("3");
+		model.put("drink",list2);//userlist是个Arraylist之类的  
+		ModelAndView mv = new ModelAndView("order_add");
+		JSONObject json = new JSONObject();
+		json.put("food" , list);
+		json.put("drink", list2);
+		mv.addObject("model", json);
+		return mv;
 	}
 	
 	@ResponseBody
