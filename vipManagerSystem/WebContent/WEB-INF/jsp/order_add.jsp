@@ -38,31 +38,6 @@ textarea {
 		});
 	}
 	
-/* 	$(function(){
-		var str = ${model};
-		console.info(str.food);
-		for(var a = 0 ; a < str.drink.length ; a ++ ){
-			console.info(str.drink[a]);
-		}
-		
-	}); */
-	function change(obj){
-			$("#product_" + obj.id.split("_")[1]).empty();
-			var str = ${model};
-		 if(obj.value=='饮品'){
-			 var list = str.drink;
-			for(var i=0 ; i < list.length ; i ++){
-				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i] +"'>"+  list[i] +"</option>"); 
-				
-			}
-		 }else{
-			 var  list = str.food;
-				for(var i=0 ; i < list.length ; i ++){
-					$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i] +"'>"+ list[i] +"</option>"); 
-					
-				}
-		 }
-	}
 	//添加方法
 	function addtr(){
 	    //var trid=0;
@@ -79,29 +54,32 @@ textarea {
 	    newNameTD.id = 'td'+ xuhao;
 	    //添加列内容
 	    newNameTD.innerHTML = xuhao;
-	    //添加列:日期
+	    //添加列:类型
 	    var newNameTD=newTR.insertCell(1);
 	    //添加列内容
-		newNameTD.innerHTML = "<select style='width:70px;' name='type_" + xuhao + "' id='way_" + xuhao + "' onchange='change(this)'>"
-						+ " <option  value=''>请选择</option> "				
-						+ " <option  value='饮品'>饮品</option> "
+		newNameTD.innerHTML = "<select style='width:70px;' name='way_." + xuhao + "' id='way_" + xuhao + "' onchange='change(this)'>"
+						 +" <option  value=''>请选择</option> "				
+						 +" <option  value='饮品'>饮品</option> "
 						 +" <option value='点心'>点心</option>  "
 						 +" <option value='特色'>特色</option>  "
 						 +"  </select>";
-	    //添加列:方式
+		//添加列:品名
 	    var newEmailTD=newTR.insertCell(2);
 	    //添加列内容
-	    newEmailTD.innerHTML =  "<select style='width:70px;' name='product_" + xuhao + "' id='product_" + xuhao + "' onchange='change(this)'>"
+	    newEmailTD.innerHTML =  "<select style='width:70px;' name='product_" + xuhao + "' id='product_" + xuhao + "'  onchange='changePrice(this)' >"
 		 +"  </select>";
-		//添加列:备注
-		var newTelTD = newTR.insertCell(3);
-		//添加列内容
-		newTelTD.innerHTML = "<input size='10' name='remark" + xuhao
-				+ "' id='remark" + xuhao
-				+ "' type='text'   />";
-
+	    //添加列:单价
+	    var newEmailTD=newTR.insertCell(3);
+	    //添加列内容
+	    newEmailTD.innerHTML =  "<input type='text' style='width:70px;' name='orderDetailList[" + xuhao + "].price' id='price_" + xuhao + "' onchange='getBill()'  />"
+								+  "<input size='10' name='orderDetailList[" + xuhao + "].goodId' id='id_" + xuhao
+								+ "' type='hidden'   />";
+		//添加列:数量
+	    var newEmailTD=newTR.insertCell(4);
+	    //添加列内容
+	    newEmailTD.innerHTML =  "<input type='text' style='width:70px;' name='orderDetailList[" + xuhao + "].count' id='count_" + xuhao + "' onchange='getBill()'  />";
 		//添加列:删除按钮
-		var newDeleteTD = newTR.insertCell(4);
+		var newDeleteTD = newTR.insertCell(5);
 		//添加列内容
 		newDeleteTD.innerHTML = "<div align='center' style='width:40px'><a href=\"javascript:;\" onclick=\"deltr('tr"
 				+ xuhao + "')\">删除</a></div>";
@@ -109,6 +87,31 @@ textarea {
 				$("#signFrame tr").each(function(){   
 				    $(this).children("td:first").attr("style","width:80px;");   
 				}) 
+	}
+	
+	function change(obj){
+			$("#product_" + obj.id.split("_")[1]).empty();
+			$("#price_" + obj.id.split("_")[1]).empty();
+			var str = ${model};
+			var list  ; 
+		 if(obj.value=='饮品'){
+			  list = str.drink;
+		 }else if(obj.value=='点心'){
+			   list = str.food;
+		 }else if(obj.value=='特色'){
+			   list = str.food;
+		 }
+			for(var i=0 ; i < list.length ; i ++){
+				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i].price +"_" + obj.id.split("_")[1] + "'>"+ list[i].productname +"</option>"); 
+			}
+			$("#price_" + obj.id.split("_")[1]).val(list[0].price);
+			$("#id_" + obj.id.split("_")[1]).val(list[0].id);
+			getBill();
+	}
+	
+	function changePrice(obj){
+		$("#price_" + obj.value.split("_")[1]).val( obj.value.split("_")[0]);
+		getBill();
 	}
 	
 	//删除其中一行
@@ -127,6 +130,69 @@ textarea {
 	        remark.id="remark";
 	    }
 	}
+	
+	$(function(){
+			$("#userName").keyup(
+				function() { //这个keyup要写在//$(document).ready,还要那个keyup,keydown,keypress自己百度看看
+					var userName = $("#userName").val();
+					$.ajax({
+								type : "POST",
+								cache : false,
+								url : "${basePath}/user/ajaxUserName?userName="
+										+ userName,
+								dataType : "json",
+								data : {},
+								async : false,
+								success : function(data) {
+									var htmlStr = "";
+									if (data && data.length > 0) {
+										htmlStr += "<table class=\"list_tab\">";
+										for (var i = 0; i < data.length; i++) {
+											htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
+													+ (i + 1)
+													+ "_dName')\">";
+											htmlStr += "<td id=\""
+													+ (i + 1)
+													+ "_dName\" style=\"text-align:left;\">";
+											htmlStr += data[i].username;
+											htmlStr += "</td>";
+											htmlStr +="<input type=\"hidden\" name = 'userId'  value = \"" + data[i].id +"\"/>"
+											htmlStr += "</tr>";
+										}
+										htmlStr += "</table>";
+
+										$("#user_namelist_div").html(
+												htmlStr);
+										$("#user_namelist_div")
+												.show();
+									} else {
+										//没有数据div就不显示
+										$("#user_namelist_div")
+												.hide();
+
+									} 
+								}
+							});
+				});
+	});
+	
+	 function selectDName(tdId){
+	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
+	      $("#user_namelist_div").hide();
+	  }
+	 
+	 function getBill(){
+		   var billSum = 0;
+		   var billNum = 0 ;
+		   $("#signFrame tr:not(:first)").each(function(){
+			      if(this.childNodes[4].childNodes[0].value!="" && this.childNodes[3].childNodes[0].value!=""){
+			    	  billSum += parseFloat(this.childNodes[4].childNodes[0].value)  *  parseFloat(this.childNodes[3].childNodes[0].value);
+			    	  billNum += parseFloat(this.childNodes[4].childNodes[0].value) ;
+			      }
+		   });	
+		   $("#bill").val(billSum);
+		   $("#count").val(billNum);
+	 }
 </script>
 </head>
 <body>
@@ -135,40 +201,29 @@ textarea {
 		action="${basePath}/admin/OrderServlet?flag=insert" method="post">
 		<table width="100%" >
 			<tr>
+				<td>客户：</td>
+				<td><input type="text" name="userName" id="userName" size="14" />
+					<div id="user_namelist_div"
+						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
+						<table class="list_tab">
+							<tr class="row">
+								<td id="user_namelist"></td>
+							</tr>
+						</table>
+					</div>
+				</td>
 				<td>订单编码：</td>
-				<td><input type="text" name="productno" size="14" /></td>
-				<td>商品分类：</td>
-				<td><select id="productTypeCode" name="producttype">
-						<option value="">---请选择---</option>
-						<option value="饮品">---饮品---</option>
-						<option value="点心">---点心---</option>
-						<option value="特色">---特色---</option>
-					</select>
-				</td>
-				<td><select id="productTypeCode" name="producttype">
-						<option value="">---请选择---</option>
-						<option value="饮品">---饮品---</option>
-						<option value="点心">---点心---</option>
-						<option value="特色">---特色---</option>
-					</select>
-				</td>
+				<td><input type="text" name="orderNo" size="14" /></td>
 			</tr>
 			<tr>
-				<td>商品名称：</td>
-				<td><input type="text" name="productname" size="14" /></td>
-				<td>商品规格：</td>
-				<td><input type="text" id="productStandard"
-					name="productstandard" size="14" /></td>
-			</tr>
-			<tr>
-				<td>商品数量：</td>
+				<td>应收总价：</td>
+				<td><input type="text" name="pill" id="bill" size="14"></input></td>
+				<td>折扣：</td>
 				<td><input type="text" name="productnum" size="14"></input></td>
-				<td>计量单位：</td>
-				<td><input type="text" name="unit" size="14"></input></td>
 			</tr>
 			<tr>
-				<td>商品单价：</td>
-				<td><input type="text" name="price" size="14"></input></td>
+				<td>总数量：</td>
+				<td><input type="text" name="count" id = "count"  size="14"></input></td>
 				<td valign="top" colspan="">备注：</td>
 				<td colspan="5"><textarea rows="2" cols="15" name="remark"></textarea>
 				</td>
@@ -181,9 +236,10 @@ textarea {
 		<table  style="width:70%;height:auto;" id="signFrame">
 			<tr id="trHeader">
 				<td width="50px">序号</td>
-				<td width="170px">类型</td>
-				<td width="100px">单价</td>
-				<td>备注</td>
+				<td width="70px">类型</td>
+				<td width="70px">品名</td>
+				<td width="50px">单价</td>
+				<td width="50px">数量</td>
 				<td width="80px">操作</td>
 			</tr>
 		</table>

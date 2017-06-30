@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-06-28 17:20:15
+Date: 2017-06-30 17:32:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,11 +49,39 @@ CREATE TABLE `t_order` (
   `pill` double(8,2) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
+INSERT INTO `t_order` VALUES ('7', '2', '1', '1.00', '1');
+INSERT INTO `t_order` VALUES ('8', '2', '1', '1.00', '1');
+INSERT INTO `t_order` VALUES ('9', '2', '1', '1.00', '1');
+INSERT INTO `t_order` VALUES ('10', '3', '11', '466.00', '4');
+
+-- ----------------------------
+-- Table structure for t_order_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order_detail`;
+CREATE TABLE `t_order_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orderId` int(11) DEFAULT NULL,
+  `goodId` int(11) DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order_detail
+-- ----------------------------
+INSERT INTO `t_order_detail` VALUES ('1', '7', '1', null);
+INSERT INTO `t_order_detail` VALUES ('2', '7', '3', null);
+INSERT INTO `t_order_detail` VALUES ('3', '8', '1', null);
+INSERT INTO `t_order_detail` VALUES ('4', '8', '3', null);
+INSERT INTO `t_order_detail` VALUES ('5', '9', '1', null);
+INSERT INTO `t_order_detail` VALUES ('6', '10', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('7', '10', '3', '2');
+INSERT INTO `t_order_detail` VALUES ('8', '10', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -71,9 +99,11 @@ CREATE TABLE `t_user` (
   `score` int(11) DEFAULT NULL,
   `level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('2', '123', '112', '1', '2017-06-24', '1', '11', '1.000', '111', '111');
+INSERT INTO `t_user` VALUES ('3', 'aaaa', 'aaaaaa', '0', '2017-06-16', 'aaa', 'aaa', '123.000', '123', '1');
+INSERT INTO `t_user` VALUES ('4', '1', 'aacasd', null, '', '1', '1', '1.000', '1', '1');

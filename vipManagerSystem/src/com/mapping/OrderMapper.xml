@@ -7,6 +7,7 @@
 		<result column="pill" property="pill" jdbcType="DECIMAL" />
 		<result column="userId" property="userId" jdbcType="INTEGER" />
 		<result column="count" property="count" jdbcType="INTEGER" />
+		
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, orderNo, userId, count,
@@ -105,6 +106,9 @@
 		#{userId,jdbcType=INTEGER},
 		#{count,jdbcType=INTEGER},
 		#{pill,jdbcType=DECIMAL})
+		<selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
 	</insert>
 	<insert id="insertSelective" parameterType="com.pojo.Order">
 		insert into t_order

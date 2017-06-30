@@ -10,17 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
 import com.core.StringUtils;
 import com.core.model.Grid;
+import com.github.pagehelper.PageHelper;
+import com.mapping.OrderDetailMapper;
 import com.mapping.OrderMapper;
+import com.mapping.UserMapper;
 import com.pojo.Order;
+import com.pojo.OrderDetail;
+import com.pojo.User;
 import com.service.OrderServiceI;
 
 @Service
 public class OrderServiceImpl implements OrderServiceI {
 	@Resource
 	private OrderMapper orderDao;
+	@Resource
+	private OrderDetailMapper orderDetail;
+	
+	@Resource
+	private UserMapper userDao;
 	@Autowired
 	private HttpServletRequest request;
 
@@ -43,6 +52,10 @@ public class OrderServiceImpl implements OrderServiceI {
 				Integer.parseInt(rowsIndex));
 		Grid grid = new Grid();
 		List<Order> results = this.orderDao.selectOrderByWhere(order);
+		for (Order orderTemp : results ) {
+			  User user = userDao.selectByPrimaryKey(orderTemp.getUserId());
+			  orderTemp.setUserName(user.getUsername());
+		}
 		Long total = this.orderDao.findOrderCountByWhere(order);
 		grid.setRows(results);
 		grid.setTotal(total);
@@ -51,7 +64,15 @@ public class OrderServiceImpl implements OrderServiceI {
 
 	@Override
 	public Integer addOrder(Order order) {
-		return orderDao.insert(order);
+		int count = orderDao.insert(order);
+		System.out.println(order.getId());
+		for (OrderDetail detail : order.getOrderDetailList()) {
+				if(detail.getGoodId() != null && detail.getGoodId() > 0){
+					detail.setOrderId(order.getId());
+					orderDetail.insert(detail);
+				}
+		}
+		return count;
 	}
 
 }

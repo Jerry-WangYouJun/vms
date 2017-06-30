@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.Constant;
 import com.core.model.Grid;
 import com.mapping.OrderMapper;
+import com.pojo.Goods;
 import com.pojo.Order;
+import com.service.GoodsServiceI;
 import com.service.OrderServiceI;
 
 @Controller
@@ -26,6 +29,9 @@ import com.service.OrderServiceI;
 public class OrderController {
 	@Resource(name="orderServiceImpl")
 	private OrderServiceI orderService;
+	
+	@Resource(name="goodsServiceImpl")
+	private GoodsServiceI goodsService;
 	
 	@Resource
 	private OrderMapper orderDao;
@@ -39,21 +45,25 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping("/insertInit")
 	public ModelAndView addInitOrder(){
-		Map<String,List<String>> model =new HashMap<String,List<String>>();
-		List<String>  list = new ArrayList();
-		list.add("a");
-		list.add("b");
-		list.add("c");
-		model.put("food",list);//userlist是个Arraylist之类的  
-		List<String>  list2 = new ArrayList();
-		list2.add("1");
-		list2.add("2");
-		list2.add("3");
-		model.put("drink",list2);//userlist是个Arraylist之类的  
+		List<Goods> goodList =this.goodsService.findByAjax("");
+		List<Goods> drinkList  =  new ArrayList<>();
+		List<Goods> foodList  =  new ArrayList<>();
+		List<Goods> specialList  =  new ArrayList<>();
+		for (Goods good : goodList) {
+			 if(Constant.DRINK.equals(good.getProducttype())){
+				 drinkList.add(good);
+			 }else if(Constant.FOOD.equals(good.getProducttype())){
+				 foodList.add(good);
+			 }else if(Constant.SPECIAL.equals(good.getProducttype())){
+				 specialList.add(good);
+			 }
+		}
+		
 		ModelAndView mv = new ModelAndView("order_add");
 		JSONObject json = new JSONObject();
-		json.put("food" , list);
-		json.put("drink", list2);
+		json.put("food" , foodList);
+		json.put("drink", drinkList);
+		json.put("special",specialList);
 		mv.addObject("model", json);
 		return mv;
 	}

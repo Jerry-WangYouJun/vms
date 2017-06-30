@@ -31,7 +31,7 @@
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
 				    {field : 'orderNo',title : '订单编码',halign:'center',width : 120},
-				    {field : 'userid',title : '顾客',halign:'center',width : 150},
+				    {field : 'userName',title : '顾客',halign:'center',width : 150},
 				    {field : 'count',title : '数量',halign:'center',width : 80},
 				    {field : 'pill',title : '总价',halign:'center',width : 80}, 
 				]]

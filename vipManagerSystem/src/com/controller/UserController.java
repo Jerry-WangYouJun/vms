@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.core.model.Grid;
 import com.github.pagehelper.PageHelper;
 import com.pojo.User;
@@ -142,5 +144,21 @@ public class UserController {
 			map.put("msg", "删除用户失败！");
 		}
 		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/ajaxUserName")
+	public String ajaxUserName( String userName , HttpServletResponse response) throws Exception {
+		Map params = new HashMap();
+		params.put("username", userName);
+		List<User> list = this.userService.findUserWhereSql(params);
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(JSONArray.toJSON(list).toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -1,14 +1,39 @@
 package com.pojo;
 
+import java.util.List;
 import java.util.Map;
 
 public class Order {
 		 private  Integer id ; 
 		 private String  orderNo;
 		 private Integer  userId ;
-		 private double  pill ;
+		 private Double  pill ;
 		 private  Integer count ;
 		 private  Map<Integer,Integer> goodMap ;
+		 private  String remark ;
+		 private String userName;
+		 private List<OrderDetail>  orderDetailList;
+		 
+		 
+		 
+		public String getUserName() {
+			return userName;
+		}
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+		public String getRemark() {
+			return remark;
+		}
+		public void setRemark(String remark) {
+			this.remark = remark;
+		}
+		public List<OrderDetail> getOrderDetailList() {
+			return orderDetailList;
+		}
+		public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+			this.orderDetailList = orderDetailList;
+		}
 		public Integer getId() {
 			return id;
 		}
@@ -27,10 +52,10 @@ public class Order {
 		public void setUserId(Integer userId) {
 			this.userId = userId;
 		}
-		public double getPill() {
+		public Double getPill() {
 			return pill;
 		}
-		public void setPill(double pill) {
+		public void setPill(Double pill) {
 			this.pill = pill;
 		}
 		public Integer getCount() {
