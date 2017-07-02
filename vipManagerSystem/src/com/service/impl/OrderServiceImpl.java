@@ -55,6 +55,12 @@ public class OrderServiceImpl implements OrderServiceI {
 		for (Order orderTemp : results ) {
 			  User user = userDao.selectByPrimaryKey(orderTemp.getUserId());
 			  orderTemp.setUserName(user.getUsername());
+			  Map param = new HashMap();
+				if (StringUtils.isNotEmpty(orderTemp.getId()+"")) {
+					param.put("orderId", "%" + orderTemp.getId() + "%");
+				}
+			  List<OrderDetail>  listDetail = orderDetail.selectByWhere(param);
+			  orderTemp.setOrderDetailList(listDetail);
 		}
 		Long total = this.orderDao.findOrderCountByWhere(order);
 		grid.setRows(results);

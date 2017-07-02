@@ -5,6 +5,9 @@ public class OrderDetail {
 	   private  Integer orderId ;
 	   private Integer goodId;
 	   private  Integer count  ;
+	   private String productname ; 
+	   private  double price;
+	   private String producttype;
 	public Integer getId() {
 		return id;
 	}
@@ -29,5 +32,23 @@ public class OrderDetail {
 	public void setGoodId(Integer goodId) {
 		this.goodId = goodId;
 	}
-	  
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public String getProductname() {
+		return productname;
+	}
+	public void setProductname(String productname) {
+		this.productname = productname;
+	}
+	public String getProducttype() {
+		return producttype;
+	}
+	public void setProducttype(String producttype) {
+		this.producttype = producttype;
+	}
+	
 }

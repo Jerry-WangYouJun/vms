@@ -34,7 +34,31 @@
 				    {field : 'userName',title : '顾客',halign:'center',width : 150},
 				    {field : 'count',title : '数量',halign:'center',width : 80},
 				    {field : 'pill',title : '总价',halign:'center',width : 80}, 
-				]]
+				]],
+			 view: detailview,
+			    detailFormatter: function(rowIndex, rowData){
+			    	var tds =  '';
+			    	for(var i =0 ; i <  rowData.orderDetailList.length ; i++){
+			    		var detail = rowData.orderDetailList[i]
+			    		console.info(detail);
+			    		 tds = '<td style="padding-left: 20px;padding-right: 20px">'+ detail.producttype +'</td>'
+								+'<td style="padding-left: 20px;padding-right: 20px">'+ detail.productname +'</td>'
+								+'<td style="padding-left: 20px;padding-right: 20px">'+ detail.price +'</td>'
+								+'<td style="padding-left: 20px;padding-right: 20px">'+ detail.count +'</td>'
+			    	}
+			    	var str = '<table>'
+				        +'<tr style="height: 30px">'
+				        +'<td style="padding-left: 20px;padding-right: 20px">类型：</td>'
+				        +'<td style="padding-left: 20px;padding-right: 20px">品名：</td>'
+				        +'<td style="padding-left: 20px;padding-right: 20px">单价：</td>'
+						+'<td style="padding-left: 20px;padding-right: 20px">数量：</td>'
+						+'</tr>'
+						+'<tr style="height: 30px">' 
+						+ tds
+						+'</tr>'
+					+'</table>' ;
+			        return str ;
+			    }
 			});
 			
 			$('#dlg-frame').dialog( {

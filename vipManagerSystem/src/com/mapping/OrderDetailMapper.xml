@@ -42,7 +42,7 @@
 	<select id="selectOrderDetailByWhere" resultMap="BaseResultMap"
 		parameterType="com.pojo.OrderDetail">
 		select
-		<include refid="Base_Column_List" />
+		orderId , goodName ,price , count 
 		from t_order_detail
 		where 1=1
 		<if test="id != null and id != ''">
@@ -62,23 +62,23 @@
 	<select id="selectByWhere" resultMap="BaseResultMap"
 		parameterType="java.util.HashMap">
 		select
-		<include refid="Base_Column_List" />
-		from t__order_detail
+		 productname ,price , count ,producttype
+		from t_order_detail d , goods g  
 		where 1=1
 		<if test="id != null and id != ''">
-			and ID = #{id}
+			and d.ID = #{id}
 		</if>
 		<if test="orderId != null and orderId != ''">
-			and orderId like CONCAT('%',#{orderId},'%' )
+			and d.orderId like CONCAT('%',#{orderId},'%' )
 		</if>
 		<if test="count != null and  count != ''">
-			and count like CONCAT('%',#{count},'%' )
+			and d.count like CONCAT('%',#{count},'%' )
 		</if>
 		<if test="goodId != null and goodId != ''">
-			and goodId = #{goodId}
+			and d.goodId = #{goodId}
 		</if>
 		<if test="q != null and q != ''">
-			and orderId like #{q}
+			and d.orderId like #{q}
 		</if>
 
 	</select>
