@@ -37,14 +37,15 @@
 				]],
 			 view: detailview,
 			    detailFormatter: function(rowIndex, rowData){
-			    	var tds =  '';
+			    	var tds = '';
 			    	for(var i =0 ; i <  rowData.orderDetailList.length ; i++){
 			    		var detail = rowData.orderDetailList[i]
-			    		console.info(detail);
-			    		 tds = '<td style="padding-left: 20px;padding-right: 20px">'+ detail.producttype +'</td>'
+			    		  
+			    		 tds += '<tr style="height: 30px"> <td style="padding-left: 20px;padding-right: 20px">'+ detail.producttype +'</td>'
 								+'<td style="padding-left: 20px;padding-right: 20px">'+ detail.productname +'</td>'
 								+'<td style="padding-left: 20px;padding-right: 20px">'+ detail.price +'</td>'
 								+'<td style="padding-left: 20px;padding-right: 20px">'+ detail.count +'</td>'
+			    		  tds += '</tr>';
 			    	}
 			    	var str = '<table>'
 				        +'<tr style="height: 30px">'
@@ -53,9 +54,7 @@
 				        +'<td style="padding-left: 20px;padding-right: 20px">单价：</td>'
 						+'<td style="padding-left: 20px;padding-right: 20px">数量：</td>'
 						+'</tr>'
-						+'<tr style="height: 30px">' 
 						+ tds
-						+'</tr>'
 					+'</table>' ;
 			        return str ;
 			    }
@@ -89,13 +88,9 @@
 		});
 		
 		function doSearch(){
-			var productNo = $("#orderNo").val();
-			var productName = $("#productname").val();
-			var productTypeCode = $("#producttypecode").val();
-			var productStandard = $("#productstandard").val();
+			var userName = $("#userName").val();
 			$('#data-table').datagrid('reload',{
-				orderNo:productNo,productname:productName,producttype:productTypeCode,
-				productstandard:productStandard
+				userName:userName
 			} );
 		}
 		function doClear(){
@@ -127,6 +122,10 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}	
+			var flag = confirm("确定删除该数据么?");
+			if(!flag){
+				 return;
+			}
 			var url = "${basePath}/order/delete";
 			$.ajax( {
 				url : url,
@@ -151,7 +150,7 @@
 		<table align="left">
 			<tr>
 				<td><span>顾客:</span></td>
-				<td><input id="userid" name="userid"/></td>
+				<td><input id="userName" name="userName"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
 				</td>

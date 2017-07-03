@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderServiceI {
 			  orderTemp.setUserName(user.getUsername());
 			  Map param = new HashMap();
 				if (StringUtils.isNotEmpty(orderTemp.getId()+"")) {
-					param.put("orderId", "%" + orderTemp.getId() + "%");
+					param.put("orderId",  orderTemp.getId());
 				}
 			  List<OrderDetail>  listDetail = orderDetail.selectByWhere(param);
 			  orderTemp.setOrderDetailList(listDetail);
@@ -71,7 +71,6 @@ public class OrderServiceImpl implements OrderServiceI {
 	@Override
 	public Integer addOrder(Order order) {
 		int count = orderDao.insert(order);
-		System.out.println(order.getId());
 		for (OrderDetail detail : order.getOrderDetailList()) {
 				if(detail.getGoodId() != null && detail.getGoodId() > 0){
 					detail.setOrderId(order.getId());

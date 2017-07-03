@@ -6,7 +6,7 @@ import java.util.Map;
 import com.pojo.OrderDetail;
 
 public interface OrderDetailMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer orderId);
 
     int insert(OrderDetail orderDetail);
 

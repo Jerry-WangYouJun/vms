@@ -23,4 +23,6 @@ public interface OrderMapper {
 	List<Order> selectOrderByWhere(Order order);
 
 	Long findOrderCountByWhere(Order order); 
+	
+	List<Map<String,Object>> queryVipDataReport();
 }

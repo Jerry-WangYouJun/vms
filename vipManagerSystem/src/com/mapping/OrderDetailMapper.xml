@@ -29,7 +29,7 @@
 			and ID = #{id}
 		</if>
 		<if test="orderId != null and orderId != ''">
-			and orderId like CONCAT('%',#{orderId},'%' )
+			and orderId  = #{orderId} 
 		</if>
 		<if test="count != null and  count != ''">
 			and count = #{count}
@@ -49,10 +49,10 @@
 			and ID = #{id}
 		</if>
 		<if test="orderId != null and orderId != ''">
-			and orderId like CONCAT('%',#{orderId},'%' )
+			and orderId  = #{orderId}
 		</if>
 		<if test="count != null and  count != ''">
-			and count like CONCAT('%',#{count},'%' )
+			and count  =  #{count}
 		</if>
 		<if test="goodId != null and goodId != ''">
 			and goodId = #{goodId}
@@ -64,15 +64,15 @@
 		select
 		 productname ,price , count ,producttype
 		from t_order_detail d , goods g  
-		where 1=1
+		where 1=1 and d.goodid = g.id 
 		<if test="id != null and id != ''">
 			and d.ID = #{id}
 		</if>
 		<if test="orderId != null and orderId != ''">
-			and d.orderId like CONCAT('%',#{orderId},'%' )
+			and d.orderId = #{orderId}
 		</if>
 		<if test="count != null and  count != ''">
-			and d.count like CONCAT('%',#{count},'%' )
+			and d.count like = #{count}
 		</if>
 		<if test="goodId != null and goodId != ''">
 			and d.goodId = #{goodId}
@@ -86,7 +86,7 @@
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from t_order_detail
-		where ID = #{id,jdbcType=INTEGER}
+		where orderId = #{orderId,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.pojo.OrderDetail">
 		insert into t_order_detail(ID, orderId, 

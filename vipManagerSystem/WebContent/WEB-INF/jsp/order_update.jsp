@@ -22,7 +22,7 @@ textarea {
 <script type="text/javascript">
 	function doServlet() {
 		$.ajax({
-			url : "${basePath}/order/insert",
+			url : "${basePath}/order/update",
 			type : 'post',
 			data : $("#orderForm").serialize(),
 			dataType : 'text',
@@ -99,7 +99,7 @@ textarea {
 		 }else if(obj.value=='点心'){
 			   list = str.food;
 		 }else if(obj.value=='特色'){
-			   list = str.special;
+			   list = str.food;
 		 }
 			for(var i=0 ; i < list.length ; i ++){
 				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i].price +"_" + obj.id.split("_")[1] + "'>"+ list[i].productname +"</option>"); 
@@ -131,50 +131,6 @@ textarea {
 	    }
 	}
 	
-	$(function(){
-			$("#userName").keyup(
-				function() { //这个keyup要写在//$(document).ready,还要那个keyup,keydown,keypress自己百度看看
-					var userName = $("#userName").val();
-					$.ajax({
-								type : "POST",
-								cache : false,
-								url : "${basePath}/user/ajaxUserName?userName="
-										+ userName,
-								dataType : "json",
-								data : {},
-								async : false,
-								success : function(data) {
-									var htmlStr = "";
-									if (data && data.length > 0) {
-										htmlStr += "<table class=\"list_tab\">";
-										for (var i = 0; i < data.length; i++) {
-											htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
-													+ (i + 1)
-													+ "_dName')\">";
-											htmlStr += "<td id=\""
-													+ (i + 1)
-													+ "_dName\" style=\"text-align:left;\">";
-											htmlStr += data[i].username;
-											htmlStr += "</td>";
-											htmlStr +="<input type=\"hidden\" name = 'userId'  value = \"" + data[i].id +"\"/>"
-											htmlStr += "</tr>";
-										}
-										htmlStr += "</table>";
-
-										$("#user_namelist_div").html(
-												htmlStr);
-										$("#user_namelist_div")
-												.show();
-									} else {
-										//没有数据div就不显示
-										$("#user_namelist_div")
-												.hide();
-
-									} 
-								}
-							});
-				});
-	});
 	
 	 function selectDName(tdId){
 	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
@@ -193,16 +149,76 @@ textarea {
 		   $("#bill").val(billSum);
 		   $("#count").val(billNum);
 	 }
+	 
+
+		$(function(){
+				$("#userName").keyup(
+					function() { //这个keyup要写在//$(document).ready,还要那个keyup,keydown,keypress自己百度看看
+						var userName = $("#userName").val();
+						$.ajax({
+									type : "POST",
+									cache : false,
+									url : "${basePath}/user/ajaxUserName?userName="
+											+ userName,
+									dataType : "json",
+									data : {},
+									async : false,
+									success : function(data) {
+										var htmlStr = "";
+										if (data && data.length > 0) {
+											htmlStr += "<table class=\"list_tab\">";
+											for (var i = 0; i < data.length; i++) {
+												htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
+														+ (i + 1)
+														+ "_dName')\">";
+												htmlStr += "<td id=\""
+														+ (i + 1)
+														+ "_dName\" style=\"text-align:left;\">";
+												htmlStr += data[i].username;
+												htmlStr += "</td>";
+												htmlStr +="<input type=\"hidden\" name = 'userId'  value = \"" + data[i].id +"\"/>"
+												htmlStr += "</tr>";
+											}
+											htmlStr += "</table>";
+
+											$("#user_namelist_div").html(
+													htmlStr);
+											$("#user_namelist_div")
+													.show();
+										} else {
+											//没有数据div就不显示
+											$("#user_namelist_div")
+													.hide();
+
+										} 
+									}
+								});
+					});
+				
+				var deatilList =  ${model};
+				//var len = deatilList.lenght;
+				//console.info(deatilList.detail.length);
+				for(var i = 1 ; i  <= deatilList.detail.length ; i ++){
+					//console.info(i);
+					addtr() ;
+					$("#way_" + i ).val(deatilList.detail[i-1].producttype);
+					$("#count_" + i ).val(deatilList.detail[i-1].count);
+					change($("#way_" + i )[0]);
+				}
+				getBill();
+		});
 </script>
 </head>
 <body>
 
 	<form id="orderForm"
 		action="${basePath}/admin/OrderServlet?flag=insert" method="post">
+		<input type="hidden" name="id" id="id"   value="${order.id }"/></td>
+		<input type="hidden" name="userId" id="userId"   value="${order.userId }"/></td>
 		<table width="100%" >
 			<tr>
-				<td>客户：</td>
-				<td><input type="text" name="userName" id="userName" size="14" />
+				<td>客户：
+				<td><input type="text" name="userName" id="userName" size="14"  value="${order.userName }"/>
 					<div id="user_namelist_div"
 						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
 						<table class="list_tab">
@@ -213,17 +229,17 @@ textarea {
 					</div>
 				</td>
 				<td>订单编码：</td>
-				<td><input type="text" name="orderNo" size="14" /></td>
+				<td><input type="text" name="orderNo" size="14" value="${order.orderNo }" /></td>
 			</tr>
 			<tr>
 				<td>应收总价：</td>
-				<td><input type="text" name="pill" id="bill" size="14"></input></td>
+				<td><input type="text" name="pill" id="bill" size="14" value="${order.pill }"></input></td>
 				<td>折扣：</td>
-				<td><input type="text" name="productnum" size="14"></input></td>
+				<td><input type="text" name="productnum" size="14" ></input></td>
 			</tr>
 			<tr>
 				<td>总数量：</td>
-				<td><input type="text" name="count" id = "count"  size="14" ></input></td>
+				<td><input type="text" name="count" id = "count"  size="14" value="${order.count }"></input></td>
 				<td valign="top" colspan="">备注：</td>
 				<td colspan="5"><textarea rows="2" cols="15" name="remark"></textarea>
 				</td>
