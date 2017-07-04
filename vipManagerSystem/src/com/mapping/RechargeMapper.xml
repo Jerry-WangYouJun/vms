@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.RechargeMapper">
+	<resultMap id="BaseResultMap" type="com.pojo.Recharge">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="creditPoints" property="creditPoints" jdbcType="INTEGER" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="totalPoints" property="totalPoints" jdbcType="INTEGER" />
+		<result column="finalMoney" property="finalMoney" jdbcType="DECIMAL" />
+		<result column="actualMoney" property="actualMoney" jdbcType="DECIMAL" />
+		<result column="giftMoney" property="giftMoney" jdbcType="DECIMAL" />
+		<result column="totalMoney" property="totalMoney" jdbcType="DECIMAL" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		ID, creditPoints, userId, totalPoints,
+		finalMoney ,actualMoney,giftMoney,totalMoney
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_recharge
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="findRechargeCountByWhere" resultType="java.lang.Long"
+		parameterType="com.pojo.Recharge">
+		select
+		count(1)
+		from t_recharge
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="userId != null and userId != ''">
+			and userId = #{userId}
+		</if>
+	</select>
+
+	<select id="selectRechargeByWhere" resultMap="BaseResultMap"
+		parameterType="com.pojo.Recharge">
+		select
+		<include refid="Base_Column_List" />
+		from t_recharge
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="userId != null and userId != ''">
+			and userId = #{userId}
+		</if>
+	</select>
+
+	<select id="selectByWhere" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_recharge
+		where 1=1
+		<if test="id != null and id != ''">
+			and ID = #{id}
+		</if>
+		<if test="userId != null and userId != ''">
+			and userId = =#{userId}=
+		</if>
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_recharge
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.pojo.Recharge">
+		insert into t_recharge(ID, creditPoints, userId,
+		totalPoints, finalMoney ,actualMoney,giftMoney,totalMoney)
+		values (#{id,jdbcType=INTEGER}, #{creditPoints,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER},
+		#{totalPoints,jdbcType=INTEGER},
+		#{finalMoney,jdbcType=DECIMAL},
+		#{actualMoney,jdbcType=DECIMAL},
+		#{giftMoney,jdbcType=DECIMAL},
+		#{totalMoney,jdbcType=DECIMAL}
+		)
+		<selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	</insert>
+	<insert id="insertSelective" parameterType="com.pojo.Recharge">
+		insert into t_recharge
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="creditPoints != null">
+				creditPoints,
+			</if>
+			<if test="userId != null">
+				userId,
+			</if>
+			<if test="totalPoints != null">
+				totalPoints,
+			</if>
+			<if test="finalMoney != null">
+				finalMoney,
+			</if>
+			<if test="actualMoney != null">
+				actualMoney,
+			</if>
+			<if test="giftMoney != null">
+				giftMoney,
+			</if>
+			<if test="totalMoney != null">
+				totalMoney,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="creditPoints != null">
+				#{creditPoints,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="totalPoints != null">
+				#{totalPoints,jdbcType=INTEGER},
+			</if>
+			<if test="finalMoney != null">
+				#{finalMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="actualMoney != null">
+				#{actualMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="giftMoney != null">
+				#{giftMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="totalMoney != null">
+				#{totalMoney,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pojo.Recharge">
+		update t_recharge
+		<set>
+			<if test="creditPoints != null">
+				creditPoints = #{creditPoints,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				userId = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="totalPoints != null">
+				totalPoints = #{totalPoints,jdbcType=INTEGER},
+			</if>
+			<if test="finalMoney != null">
+				finalMoney = #{finalMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="actualMoney != null">
+				actualMoney = #{actualMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="giftMoney != null">
+				giftMoney = #{giftMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="totalMoney != null">
+				totalMoney = #{totalMoney,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pojo.Recharge">
+		update t_recharge
+		set creditPoints = #{creditPoints,jdbcType=INTEGER},
+		userId = #{userId,jdbcType=INTEGER},
+		totalPoints = #{totalPoints,jdbcType=INTEGER},
+		finalMoney = #{finalMoney,jdbcType=DECIMAL},
+		actualMoney = #{actualMoney,jdbcType=DECIMAL},
+		giftMoney = #{giftMoney,jdbcType=DECIMAL},
+		totalMoney = #{totalMoney,jdbcType=DECIMAL}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

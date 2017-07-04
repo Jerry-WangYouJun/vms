@@ -59,7 +59,7 @@
 				},{
 					text:"会员充值管理",
 					attributes:{
-						url:"${basePath}/init/remind_list"
+						url:"${basePath}/init/recharge_list"
 					}
 				},{
 					text:"成本管理",
