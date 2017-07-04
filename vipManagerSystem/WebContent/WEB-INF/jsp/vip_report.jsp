@@ -163,15 +163,23 @@
 	<script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
-        var jsonstr="[{value:335, name:'直接访问'},{value:310, name:'邮件营销'}]";
+        var jsonstr="[{value:10, name:'直接访问'},{value:20, name:'邮件营销'},{value:70, name:'邮123营销12'}]";
         var jsonarray = eval('('+jsonstr+')');
-          
+        //  console.info(jsonarray[1]);
         var arr  =
              {
                  "name" : $('#names').val(),
                  "value" : $('#values').val()
              }
-        jsonarray.push(arr);
+        var ttt = ${mapdata};
+        //jsonarray = eval('('+ttt+')');
+       // console.info(ttt);
+        var arrs = [];
+        for(var i = 0 ; i < ttt.length ; i++){
+        	 arrs.push({name:ttt[i].name, value:ttt[i].value});
+        }
+        console.info(arrs);
+       // jsonarray.push(arr);
         // 指定图表的配置项和数据
         var option = {
 				title : {
@@ -212,15 +220,22 @@
 						type:'pie',
 						radius : '55%',
 						center: ['50%', '60%'],
-						data:[
-								jsonarray
-						]
+						data:(function(){
+                            var res = [];
+                            var len = 0;
+                            for(var i = 0 ; i < ttt.length ; i++) {
+	                            res.push({
+	                            	name:ttt[i].name, 
+	                            	value:ttt[i].value
+	                            });
+                            }
+                            return res;
+                            })()
 					}
 				]
-			};	
-                    
+		};
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
+		// 使用刚指定的配置项和数据显示图表。
+		myChart.setOption(option);
+	</script>
 </html>

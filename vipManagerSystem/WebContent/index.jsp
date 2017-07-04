@@ -72,7 +72,7 @@
 				children:[{
 					text:"会员卡分类统计",
 					attributes:{
-						url:"${basePath}/init/vip_report"
+						url:"${basePath}/report/vipinit"
 					}
 				},{
 					text:"会员消费统计",

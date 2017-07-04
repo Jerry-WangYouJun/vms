@@ -133,7 +133,8 @@ textarea {
 	
 	
 	 function selectDName(tdId){
-	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
+	        $("[id='userName']").val(document.getElementById(tdId+"_dName").innerHTML);
+	        $("#userId").val($("#" + tdId + "_id").val());
 	      $("#user_namelist_div").hide();
 	  }
 	 
@@ -170,13 +171,15 @@ textarea {
 											for (var i = 0; i < data.length; i++) {
 												htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
 														+ (i + 1)
-														+ "_dName')\">";
+														+ "')\">";
 												htmlStr += "<td id=\""
 														+ (i + 1)
 														+ "_dName\" style=\"text-align:left;\">";
 												htmlStr += data[i].username;
 												htmlStr += "</td>";
-												htmlStr +="<input type=\"hidden\" name = 'userId'  value = \"" + data[i].id +"\"/>"
+												htmlStr +="<input type=\"hidden\" name = 'userId' id=\""
+													+ (i + 1)
+													+ "_id\" value = \"" + data[i].id +"\"/>"
 												htmlStr += "</tr>";
 											}
 											htmlStr += "</table>";
