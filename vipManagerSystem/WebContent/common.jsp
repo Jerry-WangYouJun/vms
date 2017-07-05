@@ -10,3 +10,5 @@
 <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.4/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="${basePath}/js/common.js"></script>
+<script type="text/javascript" src="${basePath}/js/datagrid-detailview.js"></script>
+<script type="text/javascript" src="${basePath}/js/echarts.min.js"></script>
