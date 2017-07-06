@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-06-30 17:32:55
+Date: 2017-07-06 16:02:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,9 +34,9 @@ CREATE TABLE `goods` (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', '11', '11', '饮品', '11', '1', '11.00', '11');
-INSERT INTO `goods` VALUES ('3', '2', '2', '点心', '222', '2', '222.00', '2');
-INSERT INTO `goods` VALUES ('4', '3', '3', '饮品', '33', '33', '33.00', '33');
+INSERT INTO `goods` VALUES ('1', '11', '红茶', '饮品', '11', '1', '11.00', '11');
+INSERT INTO `goods` VALUES ('3', '2', '布丁', '点心', '222', '2', '222.00', '2');
+INSERT INTO `goods` VALUES ('4', '3', '绿茶', '饮品', '33', '33', '33.00', '33');
 
 -- ----------------------------
 -- Table structure for t_order
@@ -49,15 +49,15 @@ CREATE TABLE `t_order` (
   `pill` double(8,2) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES ('7', '2', '1', '1.00', '1');
-INSERT INTO `t_order` VALUES ('8', '2', '1', '1.00', '1');
-INSERT INTO `t_order` VALUES ('9', '2', '1', '1.00', '1');
-INSERT INTO `t_order` VALUES ('10', '3', '11', '466.00', '4');
+INSERT INTO `t_order` VALUES ('8', '2', '1', '233.00', '2');
+INSERT INTO `t_order` VALUES ('9', '4', '1', '110.00', '10');
+INSERT INTO `t_order` VALUES ('10', '3', '11', '233.00', '2');
+INSERT INTO `t_order` VALUES ('11', '2', '11', '222.00', '1');
 
 -- ----------------------------
 -- Table structure for t_order_detail
@@ -69,19 +69,39 @@ CREATE TABLE `t_order_detail` (
   `goodId` int(11) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order_detail
 -- ----------------------------
-INSERT INTO `t_order_detail` VALUES ('1', '7', '1', null);
-INSERT INTO `t_order_detail` VALUES ('2', '7', '3', null);
-INSERT INTO `t_order_detail` VALUES ('3', '8', '1', null);
-INSERT INTO `t_order_detail` VALUES ('4', '8', '3', null);
-INSERT INTO `t_order_detail` VALUES ('5', '9', '1', null);
-INSERT INTO `t_order_detail` VALUES ('6', '10', '1', '1');
-INSERT INTO `t_order_detail` VALUES ('7', '10', '3', '2');
-INSERT INTO `t_order_detail` VALUES ('8', '10', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('3', '8', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('4', '8', '3', '1');
+INSERT INTO `t_order_detail` VALUES ('9', '11', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('11', '10', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('12', '10', '3', '1');
+INSERT INTO `t_order_detail` VALUES ('17', '9', '1', '10');
+INSERT INTO `t_order_detail` VALUES ('18', '11', '3', '1');
+
+-- ----------------------------
+-- Table structure for t_recharge
+-- ----------------------------
+DROP TABLE IF EXISTS `t_recharge`;
+CREATE TABLE `t_recharge` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) DEFAULT NULL,
+  `finalMoney` double DEFAULT NULL,
+  `actualMoney` double DEFAULT NULL,
+  `giftMoney` double DEFAULT NULL,
+  `totalMoney` double DEFAULT NULL,
+  `creditPoints` int(11) DEFAULT NULL,
+  `totalPoints` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_recharge
+-- ----------------------------
+INSERT INTO `t_recharge` VALUES ('1', '4', '110', '100', '10', '110', '10', '10');
 
 -- ----------------------------
 -- Table structure for t_user
