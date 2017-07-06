@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,5 +49,33 @@ public class ReportController {
 		 }
 		 mv.addObject("mapdata", jsonarr);
 		 return mv ;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/productinit")
+	public ModelAndView productReportInit(){
+		ModelAndView  mv = new ModelAndView("product_report");
+		List<String> nameList = new ArrayList<>();
+		//["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+		nameList.add("布丁");
+		nameList.add("卡布奇诺");
+		nameList.add("红茶");
+		nameList.add("绿茶");
+		nameList.add("龟苓膏");
+		nameList.add("拿铁");
+		List<Integer> valueList = new ArrayList<>();
+		valueList.add(20);
+		valueList.add(30);
+		valueList.add(40);
+		valueList.add(50);
+		valueList.add(10);
+		valueList.add(90);
+		JSONArray json = new JSONArray();
+		json.addAll(nameList);
+		JSONArray valuejson = new JSONArray();
+		valuejson.addAll(valueList);
+		mv.addObject("data", json);
+		mv.addObject("valueData", valuejson);
+		return mv ;
 	}
 }

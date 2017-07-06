@@ -75,9 +75,9 @@
 						url:"${basePath}/report/vipinit"
 					}
 				},{
-					text:"会员消费统计",
+					text:"产品消费统计",
 					attributes:{
-						url:"${basePath}/init/inventory_list"
+						url:"${basePath}/report/productinit"
 					}
 				},{
 					text:"会员情况统计",
