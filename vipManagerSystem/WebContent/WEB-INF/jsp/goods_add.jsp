@@ -63,20 +63,16 @@
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td>商品数量：</td>
-	  		<td>
-	  			<input type="text" name="productnum" size="14"></input>
-	  		</td>
 	  		<td>计量单位：</td>
 	  		<td>
 	  			<input type="text" name="unit" size="14"></input>
 	  		</td>
-	  	</tr>
-	  	<tr>
 	  		<td>商品单价：</td>
 	  		<td>
 	  			<input type="text" name="price" size="14"></input>
 	  		</td>
+	  	</tr>
+	  	<tr>
 	  		<td valign="top" colspan="">备注：</td>
 			<td colspan="5">
 				<textarea rows="2" cols="15" name="remark"></textarea>

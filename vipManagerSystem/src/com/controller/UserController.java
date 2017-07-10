@@ -161,4 +161,27 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/checkUserName")
+	public String checkUserName( String userName , HttpServletResponse response) throws Exception {
+		Map params = new HashMap();
+		params.put("username", userName);
+		List<User> list = this.userService.findUserWhereSql(params);
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=UTF-8");
+			if(list != null){
+				response.getWriter().write(list.size());
+			}else{
+				response.getWriter().write(0);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 }

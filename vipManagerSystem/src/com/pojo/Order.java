@@ -9,6 +9,7 @@ public class Order {
 		 private Integer  userId ;
 		 private Double  pill ;
 		 private  Integer count ;
+		 private Double discount;
 		 private  Map<Integer,Integer> goodMap ;
 		 private  String remark ;
 		 private String userName;
@@ -69,6 +70,12 @@ public class Order {
 		}
 		public void setGoodMap(Map<Integer, Integer> goodMap) {
 			this.goodMap = goodMap;
+		}
+		public Double getDiscount() {
+			return discount;
+		}
+		public void setDiscount(Double discount) {
+			this.discount = discount;
 		}
 		 
 

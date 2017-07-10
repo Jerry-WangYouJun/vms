@@ -100,6 +100,21 @@ textarea {
 		   $("#bill").val(billSum);
 		   $("#count").val(billNum);
 	 }
+	 
+	 function checkUser(userName){
+		 $.ajax({
+				type : "POST",
+				cache : false,
+				url : "${basePath}/user/checkUserName?userName="
+						+ userName,
+				dataType : "json",
+				data : {},
+				async : false,
+				success : function(data) {
+					   alert(111);
+				}
+			});
+	 }
 </script>
 </head>
 <body>
@@ -109,7 +124,7 @@ textarea {
 		<table width="100%" >
 			<tr>
 				<td>客户：</td>
-				<td><input type="text" name="userName" id="userName" size="14" />
+				<td><input type="text" name="userName" id="userName" size="14" onchange="checkUser(this.value)" />
 					<div id="user_namelist_div"
 						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
 						<table class="list_tab">

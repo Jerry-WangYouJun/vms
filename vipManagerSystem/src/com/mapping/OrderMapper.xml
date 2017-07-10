@@ -4,7 +4,9 @@
 	<resultMap id="BaseResultMap" type="com.pojo.Order">
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
+		<result column="username" property="userName" jdbcType="VARCHAR" />
 		<result column="pill" property="pill" jdbcType="DECIMAL" />
+		<result column="discount" property="discount" jdbcType="DECIMAL" />
 		<result column="userId" property="userId" jdbcType="INTEGER" />
 		<result column="count" property="count" jdbcType="INTEGER" />
 		
@@ -12,13 +14,13 @@
 	
 	<select id="queryVipDataReport" resultType="java.util.HashMap"  parameterType="java.util.HashMap">
 	    select
-		 o.orderNo , o.pill , o.count , u.username 
+		 o.orderNo , o.pill , o.count , u.username  , o.discount
 		from t_order o , t_user u  
 		where 1=1 and o.userid = u.id 
 	</select>
   
 	<sql id="Base_Column_List">
-		ID, orderNo, userId, count,
+		ID, orderNo, userId, count,username,discount,
 		pill
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -109,11 +111,11 @@
 	</delete>
 	<insert id="insert" parameterType="com.pojo.Order">
 		insert into t_order(ID, orderNo, userId,
-		count, pill)
+		count, pill , username)
 		values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR},
 		#{userId,jdbcType=INTEGER},
 		#{count,jdbcType=INTEGER},
-		#{pill,jdbcType=DECIMAL})
+		#{pill,jdbcType=DECIMAL} , #{userName,jdbcType=VARCHAR} , #{discount,jdbcType=DECIMAL})
 		<selectKey resultType="Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() AS id
 		</selectKey>
@@ -127,6 +129,9 @@
 			<if test="orderNo != null">
 				orderNo,
 			</if>
+			<if test="userName != null">
+				username,
+			</if>
 			<if test="userId != null">
 				userId,
 			</if>
@@ -136,6 +141,9 @@
 			<if test="pill != null">
 				pill,
 			</if>
+			<if test="discount != null">
+				discount,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -143,6 +151,9 @@
 			</if>
 			<if test="orderNo != null">
 				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
 			</if>
 			<if test="userId != null">
 				#{userId,jdbcType=INTEGER},
@@ -153,6 +164,9 @@
 			<if test="pill != null">
 				#{pill,jdbcType=DECIMAL},
 			</if>
+			<if test="discount != null">
+				#{discount,jdbcType=DECIMAL},
+			</if>
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="com.pojo.Order">
@@ -160,6 +174,9 @@
 		<set>
 			<if test="orderNo != null">
 				orderNo = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				username = #{userName,jdbcType=VARCHAR},
 			</if>
 			<if test="userId != null">
 				userId = #{userId,jdbcType=INTEGER},
@@ -170,15 +187,19 @@
 			<if test="pill != null">
 				pill = #{pill,jdbcType=DECIMAL},
 			</if>
+			<if test="discount != null">
+				discount = #{discount,jdbcType=DECIMAL},
+			</if>
 		</set>
 		where ID = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.pojo.Order">
 		update t_order
-		set orderNo = #{orderNo,jdbcType=VARCHAR},
+		set orderNo = #{orderNo,jdbcType=VARCHAR},username = #{userName,jdbcType=VARCHAR},
 		userId = #{userId,jdbcType=INTEGER},
 		count = #{count,jdbcType=INTEGER},
 		pill = #{pill,jdbcType=DECIMAL},
+		discount = #{discount,jdbcType=DECIMAL},
 		where ID = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

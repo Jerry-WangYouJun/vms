@@ -21,6 +21,16 @@ textarea {
 </style>
 <script type="text/javascript">
 	function doServlet() {
+		var bill =   $("#bill").val();
+		var count=   $("#count").val();
+		if(count <= 0 || count == "" ){
+			 alert("请添加饮品或点心");
+			 return ;
+		}
+		if(bill <= 0 ){
+			alert("订单总价错误，请检查订单费用是否错误");
+			return;
+		}
 		$.ajax({
 			url : "${basePath}/order/insert",
 			type : 'post',
@@ -77,7 +87,7 @@ textarea {
 		//添加列:数量
 	    var newEmailTD=newTR.insertCell(4);
 	    //添加列内容
-	    newEmailTD.innerHTML =  "<input type='text' style='width:70px;' name='orderDetailList[" + xuhao + "].count' id='count_" + xuhao + "' onchange='getBill()'  />";
+	    newEmailTD.innerHTML =  "<input type='text' style='width:70px;' value='1' name='orderDetailList[" + xuhao + "].count' id='count_" + xuhao + "' onchange='getBill()'  />";
 		//添加列:删除按钮
 		var newDeleteTD = newTR.insertCell(5);
 		//添加列内容
@@ -190,9 +200,21 @@ textarea {
 			    	  billNum += parseFloat(this.childNodes[4].childNodes[0].value) ;
 			      }
 		   });	
-		   $("#bill").val(billSum);
+		   $("#bill").val(billSum - $("#discount").val());
 		   $("#count").val(billNum);
 	 }
+	 
+	 $(document).bind('click', function(e) {  
+         var e = e || window.event; //浏览器兼容性   
+         var elem = e.target || e.srcElement;  
+         while (elem) { //循环判断至跟节点，防止点击的是div子元素   
+             if (elem.id && elem.id == 'user_namelist_div') {  
+                 return;  
+             }  
+             elem = elem.parentNode;  
+         }  
+         $('#user_namelist_div').css('display', 'none'); //点击的不是div或其子元素   
+     }); 
 </script>
 </head>
 <body>
@@ -203,7 +225,7 @@ textarea {
 			<tr>
 				<td>客户：</td>
 				<td><input type="text" name="userName" id="userName" size="14" />
-					<div id="user_namelist_div"
+					<div id="user_namelist_div"   
 						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
 						<table class="list_tab">
 							<tr class="row">
@@ -219,7 +241,7 @@ textarea {
 				<td>应收总价：</td>
 				<td><input type="text" name="pill" id="bill" size="14"></input></td>
 				<td>折扣：</td>
-				<td><input type="text" name="productnum" size="14"></input></td>
+				<td><input type="text" id="discount" name=discount size="14" onchange="getBill()"></input></td>
 			</tr>
 			<tr>
 				<td>总数量：</td>

@@ -95,14 +95,6 @@
 		  		<td>
 		  			<form:input id="level" path="level" />
 		  		</td>
-		  		<td>余额：</td>
-		  		<td>
-		  			<form:input id="balance" path="balance" />
-		  		</td>
-		  		<td>积分：</td>
-		  		<td>
-		  			<form:input id="score" path="score" />
-		  		</td>
 		  	</tr>
 		  </table>
 	</form:form>

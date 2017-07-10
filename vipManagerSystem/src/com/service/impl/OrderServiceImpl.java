@@ -53,8 +53,8 @@ public class OrderServiceImpl implements OrderServiceI {
 		Grid grid = new Grid();
 		List<Order> results = this.orderDao.selectOrderByWhere(order);
 		for (Order orderTemp : results ) {
-			  User user = userDao.selectByPrimaryKey(orderTemp.getUserId());
-			  orderTemp.setUserName(user.getUsername());
+//			  User user = userDao.selectByPrimaryKey(orderTemp.getUserId());
+//			  orderTemp.setUserName(user.getUsername());
 			  Map param = new HashMap();
 				if (StringUtils.isNotEmpty(orderTemp.getId()+"")) {
 					param.put("orderId",  orderTemp.getId());
