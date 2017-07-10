@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-07-06 16:02:51
+Date: 2017-07-10 17:33:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,19 +45,25 @@ DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
   `orderNo` varchar(20) DEFAULT NULL,
   `pill` double(8,2) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
+  `discount` double(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES ('8', '2', '1', '233.00', '2');
-INSERT INTO `t_order` VALUES ('9', '4', '1', '110.00', '10');
-INSERT INTO `t_order` VALUES ('10', '3', '11', '233.00', '2');
-INSERT INTO `t_order` VALUES ('11', '2', '11', '222.00', '1');
+INSERT INTO `t_order` VALUES ('8', '2', '112', '1', '233.00', '2', null);
+INSERT INTO `t_order` VALUES ('9', '4', 'aacasd', '1', '110.00', '10', null);
+INSERT INTO `t_order` VALUES ('10', '3', 'bb', '11', '233.00', '2', null);
+INSERT INTO `t_order` VALUES ('11', '2', '112', '11', '454.00', '3', '1.00');
+INSERT INTO `t_order` VALUES ('12', '3', 'aaaaaa', '11', '111.00', '1111', null);
+INSERT INTO `t_order` VALUES ('13', null, 'm,nlkmjkl', '111', '11.00', '1', null);
+INSERT INTO `t_order` VALUES ('14', null, 'hhh', '111', '11.00', '1', null);
+INSERT INTO `t_order` VALUES ('15', '3', 'aaaaaaaaa', 'iuiui', '55.00', '5', null);
 
 -- ----------------------------
 -- Table structure for t_order_detail
@@ -69,18 +75,21 @@ CREATE TABLE `t_order_detail` (
   `goodId` int(11) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order_detail
 -- ----------------------------
 INSERT INTO `t_order_detail` VALUES ('3', '8', '1', '1');
 INSERT INTO `t_order_detail` VALUES ('4', '8', '3', '1');
-INSERT INTO `t_order_detail` VALUES ('9', '11', '1', '1');
-INSERT INTO `t_order_detail` VALUES ('11', '10', '1', '1');
-INSERT INTO `t_order_detail` VALUES ('12', '10', '3', '1');
 INSERT INTO `t_order_detail` VALUES ('17', '9', '1', '10');
-INSERT INTO `t_order_detail` VALUES ('18', '11', '3', '1');
+INSERT INTO `t_order_detail` VALUES ('19', '13', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('20', '14', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('21', '15', '1', '5');
+INSERT INTO `t_order_detail` VALUES ('22', '10', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('23', '10', '3', '1');
+INSERT INTO `t_order_detail` VALUES ('26', '11', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('27', '11', '3', '2');
 
 -- ----------------------------
 -- Table structure for t_recharge
