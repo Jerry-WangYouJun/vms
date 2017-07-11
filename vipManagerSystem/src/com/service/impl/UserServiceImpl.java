@@ -41,7 +41,11 @@ public class UserServiceImpl implements UserServiceI {
 		// TODO Auto-generated method stub
 		return this.userDao.selectUserCountByWhere(params);
 	}
-
+	@Override
+	public List<User> selectByUserName(Map params) {
+		// TODO Auto-generated method stub
+		return this.userDao.selectByUserName(params);
+	}
 
 	@Override
 	public int inserUser(User user) {

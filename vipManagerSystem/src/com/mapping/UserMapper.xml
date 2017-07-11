@@ -31,6 +31,13 @@
     and address = #{address}
   </select>
   
+   <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where username = #{username}
+  </select>
+  
   <select id="selectUserByWhere" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select 
     <include refid="Base_Column_List" />

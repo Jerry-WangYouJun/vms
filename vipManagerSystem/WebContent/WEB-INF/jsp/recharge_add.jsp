@@ -107,11 +107,10 @@ textarea {
 				cache : false,
 				url : "${basePath}/user/checkUserName?userName="
 						+ userName,
-				dataType : "json",
-				data : {},
+				dataType : "text",
 				async : false,
 				success : function(data) {
-					   alert(111);
+					   alert(data);
 				}
 			});
 	 }

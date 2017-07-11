@@ -27,4 +27,6 @@ public interface UserMapper {
 	public List<User> selectUserByWhere(Map params);
 
 	public Long selectUserCountByWhere(Map params);
+	
+	public List<User>  selectByUserName(Map params);
 }

@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.core.model.Grid;
 import com.github.pagehelper.PageHelper;
+import com.pojo.Recharge;
 import com.pojo.User;
+import com.service.RechargeServiceI;
 import com.service.UserServiceI;
 
 @Controller
@@ -30,6 +31,9 @@ import com.service.UserServiceI;
 public class UserController {
 	@Resource(name="userServiceImpl")
 	private UserServiceI userService;
+	
+	@Resource(name="rechargeServiceImpl")
+	private RechargeServiceI rechargeService;
 	
 	@RequestMapping("/checkUser")
 	public void checkUser(HttpServletRequest request,HttpServletResponse response) {
@@ -81,6 +85,9 @@ public class UserController {
 		Grid grid = new Grid();
 		
 		List<User> results = this.userService.findUserWhereSql(params);
+		for(User user : results){
+			  List<Recharge>  list = rechargeService.findByAjax("");
+		} 
 		Long total = this.userService.findUserCountByWhere(params);
 		grid.setRows(results);
 		grid.setTotal(total);
@@ -167,16 +174,15 @@ public class UserController {
 	public String checkUserName( String userName , HttpServletResponse response) throws Exception {
 		Map params = new HashMap();
 		params.put("username", userName);
-		List<User> list = this.userService.findUserWhereSql(params);
+		List<User> list = this.userService.selectByUserName(params);
 		try {
 			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");
+			response.setContentType("charset=UTF-8");
 			if(list != null){
-				response.getWriter().write(list.size());
+				response.getWriter().write(list.size() + "");
 			}else{
-				response.getWriter().write(0);
+				response.getWriter().write(0 + "");
 			}
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

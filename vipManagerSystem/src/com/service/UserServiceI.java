@@ -20,5 +20,6 @@ public interface UserServiceI {
 	public int updateUser(User user);
 
 	public int deleteUser(String id);
-
+	
+	public List<User>  selectByUserName(Map params);
 }
