@@ -108,11 +108,13 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}	
-			var url = "${basePath}/recharge/recharge_delete/" + obj.id;
+			var url = "${basePath}/recharge/delete" ;
 			$.ajax( {
 				url : url,
 				type : 'post',
-				data : $("#dataForm").serialize(),
+				data : {
+					id : obj.id
+				},
 				dataType : 'json',
 				success : function(data) {
 					if(data.success){
