@@ -1,8 +1,11 @@
 package com.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -64,6 +67,9 @@ public class RechargeServiceImpl implements RechargeServiceI {
 
 	@Override
 	public Integer addRecharge(Recharge recharge) {
+		Date date = new Date();
+		String rechargeDate = (new SimpleDateFormat("yyyy-MM-dd")).format(date);  
+		recharge.setRechargetime(rechargeDate);
 		int count = rechargeDao.insert(recharge);
 		return count;
 	}

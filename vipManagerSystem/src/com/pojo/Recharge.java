@@ -10,6 +10,14 @@ public class Recharge {
 	 private Integer  totalPoints ;  //总积分
 	 private  Double  totalMoney  ;
 	 private String userName;
+	 private String rechargetime ;
+	 
+	public String getRechargetime() {
+		return rechargetime;
+	}
+	public void setRechargetime(String rechargetime) {
+		this.rechargetime = rechargetime;
+	}
 	public Integer getId() {
 		return id;
 	}

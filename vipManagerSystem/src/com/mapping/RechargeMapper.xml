@@ -10,11 +10,12 @@
 		<result column="actualMoney" property="actualMoney" jdbcType="DECIMAL" />
 		<result column="giftMoney" property="giftMoney" jdbcType="DECIMAL" />
 		<result column="totalMoney" property="totalMoney" jdbcType="DECIMAL" />
+		<result column="rechargetime" property="rechargetime" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
 		ID, creditPoints, userId, totalPoints,
-		finalMoney ,actualMoney,giftMoney,totalMoney
+		finalMoney ,actualMoney,giftMoney,totalMoney,rechargetime
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
@@ -50,6 +51,7 @@
 		<if test="userId != null and userId != ''">
 			and userId = #{userId}
 		</if>
+		order by userId , rechargetime desc 
 	</select>
 
 	<select id="selectByWhere" resultMap="BaseResultMap"
@@ -73,14 +75,15 @@
 	</delete>
 	<insert id="insert" parameterType="com.pojo.Recharge">
 		insert into t_recharge(ID, creditPoints, userId,
-		totalPoints, finalMoney ,actualMoney,giftMoney,totalMoney)
+		totalPoints, finalMoney ,actualMoney,giftMoney,totalMoney,rechargetime)
 		values (#{id,jdbcType=INTEGER}, #{creditPoints,jdbcType=INTEGER},
 		#{userId,jdbcType=INTEGER},
 		#{totalPoints,jdbcType=INTEGER},
 		#{finalMoney,jdbcType=DECIMAL},
 		#{actualMoney,jdbcType=DECIMAL},
 		#{giftMoney,jdbcType=DECIMAL},
-		#{totalMoney,jdbcType=DECIMAL}
+		#{totalMoney,jdbcType=DECIMAL},
+		#{rechargetime,jdbcType=VARCHAR}
 		)
 		<selectKey resultType="Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() AS id
@@ -176,7 +179,8 @@
 		finalMoney = #{finalMoney,jdbcType=DECIMAL},
 		actualMoney = #{actualMoney,jdbcType=DECIMAL},
 		giftMoney = #{giftMoney,jdbcType=DECIMAL},
-		totalMoney = #{totalMoney,jdbcType=DECIMAL}
+		totalMoney = #{totalMoney,jdbcType=DECIMAL},
+		rechargetime = #{rechargetime,jdbcType=VARCHAR}
 		where ID = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

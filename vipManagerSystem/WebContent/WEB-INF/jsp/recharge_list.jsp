@@ -37,7 +37,8 @@
 				    {field : 'giftMoney',title : '赠送金额',halign:'center',width : 80},
 				    {field : 'totalMoney',title : '余额',halign:'center',width : 100},
 				    {field : 'creditPoints',title : '充值节分',halign:'center',width : 100},
-				    {field : 'totalPoints',title : '剩余积分',halign:'center',width : 100}
+				    {field : 'totalPoints',title : '剩余积分',halign:'center',width : 100},
+				    {field : 'rechargetime',title : '充值时间',halign:'center',width : 100}
 				]]
 			});
 			
@@ -92,7 +93,7 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}		
-			var path = "${basePath}/recharge/recharge_update_input/" + obj.id;
+			var path = "${basePath}/recharge/updateinit?id=" + obj.id;
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
