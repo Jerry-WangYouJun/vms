@@ -1,5 +1,8 @@
 package com.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +21,6 @@ import com.mapping.OrderMapper;
 import com.mapping.UserMapper;
 import com.pojo.Order;
 import com.pojo.OrderDetail;
-import com.pojo.User;
 import com.service.OrderServiceI;
 
 @Service
@@ -70,6 +72,9 @@ public class OrderServiceImpl implements OrderServiceI {
 
 	@Override
 	public Integer addOrder(Order order) {
+		Date date = new Date();
+		String  orderDate = (new SimpleDateFormat("yyyy-MM-dd")).format(date);  
+		order.setOrderDate(orderDate);
 		int count = orderDao.insert(order);
 		for (OrderDetail detail : order.getOrderDetailList()) {
 				if(detail.getGoodId() != null && detail.getGoodId() > 0){

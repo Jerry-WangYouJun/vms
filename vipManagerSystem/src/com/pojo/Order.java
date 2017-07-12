@@ -14,9 +14,14 @@ public class Order {
 		 private  String remark ;
 		 private String userName;
 		 private List<OrderDetail>  orderDetailList;
+		 private  String orderDate;
 		 
-		 
-		 
+		public String getOrderDate() {
+			return orderDate;
+		}
+		public void setOrderDate(String orderDate) {
+			this.orderDate = orderDate;
+		}
 		public String getUserName() {
 			return userName;
 		}

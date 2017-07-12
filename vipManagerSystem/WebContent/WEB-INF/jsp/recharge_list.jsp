@@ -33,7 +33,6 @@
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
 				    {field : 'userName',title : '用户姓名',halign:'center',width : 80},
-				    {field : 'finalMoney',title : '充值金额',halign:'center',width : 80},
 				    {field : 'actualMoney',title : '实收金额',halign:'center',width : 80},
 				    {field : 'giftMoney',title : '赠送金额',halign:'center',width : 80},
 				    {field : 'totalMoney',title : '余额',halign:'center',width : 100},

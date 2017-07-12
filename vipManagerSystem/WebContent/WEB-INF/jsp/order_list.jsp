@@ -34,6 +34,7 @@
 				    {field : 'userName',title : '顾客',halign:'center',width : 150},
 				    {field : 'count',title : '数量',halign:'center',width : 80},
 				    {field : 'pill',title : '总价',halign:'center',width : 80}, 
+				    {field : 'orderDate',title : '时间',halign:'center',width : 80}, 
 				]],
 			 view: detailview,
 			    detailFormatter: function(rowIndex, rowData){

@@ -54,7 +54,16 @@ public class RechargeController {
 	@ResponseBody
 	@RequestMapping("/insert")
 	public Integer addRecharge(Recharge recharge ){
-		 return this.rechargeService.addRecharge(recharge);
+		int count  = this.rechargeService.addRecharge(recharge) ;
+		if(count > 0 ){
+			User user = userDao.selectByPrimaryKey(recharge.getUserId());
+			if(user!= null){
+				user.setBalance(recharge.getTotalMoney() + "");
+				user.setScore(recharge.getTotalPoints()+ "");
+			}
+			userDao.updateByPrimaryKey(user);
+		}
+		 return count;
 	}
 	
 	@ResponseBody

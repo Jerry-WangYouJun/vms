@@ -27,7 +27,7 @@ textarea {
 			 alert("请添加饮品或点心");
 			 return ;
 		}
-		if(bill <= 0 ){
+		if(bill < 0 ){
 			alert("订单总价错误，请检查订单费用是否错误");
 			return;
 		}

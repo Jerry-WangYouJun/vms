@@ -9,7 +9,7 @@
 		<result column="discount" property="discount" jdbcType="DECIMAL" />
 		<result column="userId" property="userId" jdbcType="INTEGER" />
 		<result column="count" property="count" jdbcType="INTEGER" />
-		
+		<result column="orderDate" property="orderDate" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<select id="queryVipDataReport" resultType="java.util.HashMap"  parameterType="java.util.HashMap">
@@ -20,7 +20,7 @@
 	</select>
   
 	<sql id="Base_Column_List">
-		ID, orderNo, userId, count,username,discount,
+		ID, orderNo, userId, count,username,discount,orderDate,
 		pill
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -111,11 +111,11 @@
 	</delete>
 	<insert id="insert" parameterType="com.pojo.Order">
 		insert into t_order(ID, orderNo, userId,
-		count, pill , username)
+		count, pill , username , discount,orderDate)
 		values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR},
 		#{userId,jdbcType=INTEGER},
 		#{count,jdbcType=INTEGER},
-		#{pill,jdbcType=DECIMAL} , #{userName,jdbcType=VARCHAR} , #{discount,jdbcType=DECIMAL})
+		#{pill,jdbcType=DECIMAL} , #{userName,jdbcType=VARCHAR} , #{discount,jdbcType=DECIMAL}, #{orderDate,jdbcType=VARCHAR})
 		<selectKey resultType="Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() AS id
 		</selectKey>
