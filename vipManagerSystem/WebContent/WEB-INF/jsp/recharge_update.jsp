@@ -82,7 +82,7 @@ textarea {
 										for (var i = 0; i < data.length; i++) {
 											htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
 													+ (i + 1)
-													+ "_dName' , "+ data[i].balance  +" , "+ data[i].score +")\">";
+													+ "_dName' , "+ data[i].balance  +" , "+ data[i].score +", "+ data[i].id  +")\">";
 											htmlStr += "<td id=\""
 													+ (i + 1)
 													+ "_dName\" style=\"text-align:left;\">";
@@ -110,10 +110,11 @@ textarea {
 				});
 	});
 	
-	 function selectDName(tdId , balance , score){
+	 function selectDName(tdId , balance , score , userId){
 	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
 	        $("#totalMoney").val(balance);
 	        $("#totalPoints").val(score);
+	        $("#userId").val(userId);
 	      $("#user_namelist_div").hide();
 	  }
 	 

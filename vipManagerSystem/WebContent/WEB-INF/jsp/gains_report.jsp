@@ -72,8 +72,8 @@
 				productno:productNo,productname:productName,producttype:productTypeCode,
 				productstandard:productStandard
 			} );
-			getCharts();
 		}
+		
 		function doClear(){
 			$("#productno").val("");
 			$("#productname").val("");
@@ -155,87 +155,58 @@
 	<div style="height:290px;width:600px;float:left" >
 		<table id="data-table"  style="height:290px" title="数据列表" ></table>
 	</div>
-	<div id="main" style="width:400px;height:400px;float:left" ></div>
+	<div id="main" style="width:450px;height:450px;float:left" ></div>
 	<div id="dlg-frame">
 		<iframe width="99%" height="90%" name="frameContent" id="frameContent"
 			frameborder="0"></iframe>
 	</div>
 	</body>
-	<script type="text/javascript">
-	function getCharts(){
-		alert(123);
+	 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-        var jsonstr="[{value:10, name:'直接访问'},{value:20, name:'邮件营销'},{value:70, name:'邮123营销12'}]";
-        var jsonarray = eval('('+jsonstr+')');
-        //  console.info(jsonarray[1]);
-        var arr  =
-             {
-                 "name" : $('#names').val(),
-                 "value" : $('#values').val()
-             }
-        var ttt = ${mapdata};
-        var arrs = [];
-        for(var i = 0 ; i < ttt.length ; i++){
-        	 arrs.push({name:ttt[i].name, value:ttt[i].value});
-        }
+        var myChart = echarts.init(document.getElementById('main'), 'dark');
+		var   nameList = ${data} ;
+		var  valueList = ${valueData}
         // 指定图表的配置项和数据
         var option = {
-				title : {
-					text: 'VIP消费统计',
-					subtext: '纯属虚构',
-					x:'center'
-				},
-				tooltip : {
-					trigger: 'item',
-					formatter: "{a} <br/>{b} : {c} ({d}%)"
-				},
-				
-				toolbox: {
-					show : true,
-					feature : {
-						mark : {show: true},
-						dataView : {show: true, readOnly: false},
-						magicType : {
-							show: true, 
-							type: ['pie', 'funnel'],
-							option: {
-								funnel: {
-									x: '25%',
-									width: '50%',
-									funnelAlign: 'left',
-									max: 1548
-								}
-							}
-						},
-						restore : {show: true},
-						saveAsImage : {show: true}
-					}
-				},
-				calculable : true,
-				series : [
-					{
-						name:'访问来源',
-						type:'pie',
-						radius : '55%',
-						center: ['50%', '60%'],
-						data:(function(){
-                            var res = [];
-                            var len = 0;
-                            for(var i = 0 ; i < ttt.length ; i++) {
-	                            res.push({
-	                            	name:ttt[i].name, 
-	                            	value:ttt[i].value
-	                            });
-                            }
-                            return res;
-                            })()
-					}
-				]
-		};
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: nameList
+            },
+            yAxis: {},
+            series: [{
+            	itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            // build a color map as your need.
+                            var colorList = [
+                              '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                               '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+                        label: {
+                            show: true,
+                            position: 'top',
+//                             formatter: '{c}'
+                            formatter: '{b}\n{c}'
+                        }
+                    }
+                },
+                name: '销量',
+                type: 'bar',
+                data: valueList
+            }]
+        };
 
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-	}
-	</script>
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+	 
+    </script>
 </html>

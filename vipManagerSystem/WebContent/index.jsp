@@ -80,9 +80,9 @@
 						url:"${basePath}/report/productinit"
 					}
 				},{
-					text:"会员情况统计",
+					text:"利润统计",
 					attributes:{
-						url:"${basePath}/init/instock_list"
+						url:"${basePath}/report/gainsinit"
 					}
 				}]
 			}];

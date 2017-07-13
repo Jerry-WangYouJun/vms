@@ -54,7 +54,24 @@ public class ReportController {
 	@ResponseBody
 	@RequestMapping("/productinit")
 	public ModelAndView productReportInit(){
-		ModelAndView  mv = new ModelAndView("product_report");
+		ModelAndView  mv = new ModelAndView("vip_report");
+		JSONArray jsonarr = new JSONArray();
+		// List<Map<String,Object>> list =  orderDao.queryVipDataReport();
+		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport();
+		 for(Map<String,Object> mapTemp : list){
+			 JSONObject map = new JSONObject();
+			 map.put("value",mapTemp.get("counts").toString() ) ;
+			 map.put("name", mapTemp.get("proname").toString() );
+			 jsonarr.add(map);
+		 }
+		 mv.addObject("mapdata", jsonarr);
+		 return mv ;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/gainsinit")
+	public ModelAndView gainsReportInit(){
+		ModelAndView  mv = new ModelAndView("gains_report");
 		List<String> nameList = new ArrayList<>();
 		//["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
 		nameList.add("布丁");

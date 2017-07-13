@@ -14,11 +14,17 @@
 	
 	<select id="queryVipDataReport" resultType="java.util.HashMap"  parameterType="java.util.HashMap">
 	    select
-		 o.orderNo , o.pill , o.count , u.username  , o.discount
-		from t_order o , t_user u  
-		where 1=1 and o.userid = u.id 
+		 o.orderNo , sum(o.pill) pill , sum(o.count)count , o.username  , o.discount
+		from t_order o left join  t_user u  on o.userid = u.id 
+		where 1=1 group by o.username  
 	</select>
-  
+	
+  	<select id="queryPorductDataReport" resultType="java.util.HashMap"  parameterType="java.util.HashMap">
+	    select sum(d.count) counts , g.productname proname from 
+		   t_order o  , t_order_detail d   , goods g
+		   where  o.id = d.orderId  and d.goodId=g.id group by goodid 
+	</select>
+	
 	<sql id="Base_Column_List">
 		ID, orderNo, userId, count,username,discount,orderDate,
 		pill
