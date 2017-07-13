@@ -162,8 +162,6 @@
 	</div>
 	</body>
 	<script type="text/javascript">
-	function getCharts(){
-		alert(123);
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
         var jsonstr="[{value:10, name:'直接访问'},{value:20, name:'邮件营销'},{value:70, name:'邮123营销12'}]";
@@ -235,6 +233,76 @@
 		};
 
 		// 使用刚指定的配置项和数据显示图表。
+		myChart.setOption(option);
+	function getCharts(){
+		var myChart = echarts.init(document.getElementById('main'));
+		var url = "${basePath}/report/ajaxProduct";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			dataType : 'json',
+			success : function(data) {
+				//var jsonarray = eval('('+data+')');
+				//console.info(data);
+				ttt=data;
+			},
+			error : function(transport) {
+				$.messager.alert('提示', "系统产生错误,请联系管理员!", "error");
+			}
+		});
+		option = {
+				title : {
+					text: 'VIP消费统计',
+					subtext: '纯属虚构',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				
+				toolbox: {
+					show : true,
+					feature : {
+						mark : {show: true},
+						dataView : {show: true, readOnly: false},
+						magicType : {
+							show: true, 
+							type: ['pie', 'funnel'],
+							option: {
+								funnel: {
+									x: '25%',
+									width: '50%',
+									funnelAlign: 'left',
+									max: 1548
+								}
+							}
+						},
+						restore : {show: true},
+						saveAsImage : {show: true}
+					}
+				},
+				calculable : true,
+				series : [
+					{
+						name:'访问来源',
+						type:'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:(function(){
+                            var res = [];
+                            var len = 0;
+                            for(var i = 0 ; i < ttt.length ; i++) {
+	                            res.push({
+	                            	name:ttt[i].name, 
+	                            	value:ttt[i].value
+	                            });
+                            }
+                            return res;
+                            })()
+					}
+				]
+		};
 		myChart.setOption(option);
 	}
 	</script>

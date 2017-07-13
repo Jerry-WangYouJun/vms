@@ -1,10 +1,12 @@
 package com.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -54,7 +56,7 @@ public class ReportController {
 	@ResponseBody
 	@RequestMapping("/productinit")
 	public ModelAndView productReportInit(){
-		ModelAndView  mv = new ModelAndView("vip_report");
+		ModelAndView  mv = new ModelAndView("product_report");
 		JSONArray jsonarr = new JSONArray();
 		// List<Map<String,Object>> list =  orderDao.queryVipDataReport();
 		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport();
@@ -66,6 +68,28 @@ public class ReportController {
 		 }
 		 mv.addObject("mapdata", jsonarr);
 		 return mv ;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/ajaxProduct")
+	public String ajaxProduct( String userName , HttpServletResponse response) throws Exception {
+		JSONArray jsonarr = new JSONArray();
+		// List<Map<String,Object>> list =  orderDao.queryVipDataReport();
+		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport();
+		 for(Map<String,Object> mapTemp : list){
+			 JSONObject map = new JSONObject();
+			 map.put("value",mapTemp.get("counts").toString() ) ;
+			 map.put("name", mapTemp.get("proname").toString() );
+			 jsonarr.add(map);
+		 }
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonarr.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@ResponseBody
