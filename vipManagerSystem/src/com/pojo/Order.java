@@ -15,7 +15,14 @@ public class Order {
 		 private String userName;
 		 private List<OrderDetail>  orderDetailList;
 		 private  String orderDate;
+		 private String pillType ;
 		 
+		public String getPillType() {
+			return pillType;
+		}
+		public void setPillType(String pillType) {
+			this.pillType = pillType;
+		}
 		public String getOrderDate() {
 			return orderDate;
 		}

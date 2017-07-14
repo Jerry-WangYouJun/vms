@@ -8,31 +8,23 @@
 	<jsp:include page="/common.jsp"></jsp:include>
 	<script type="text/javascript">
 		$(function(){
+			$("#reportType").val("${reportType}");
+			$("#reportDate").val("${reportDate}");
+			$("#producttypecode").val("${producttypecode}");
+			var reportType = $("#reportType").val();
+			var reportDate = $("#reportDate").val();
+			var producttypecode = $("#producttypecode").val();
 			$('#data-table').datagrid( {
-				url : '${basePath}/report/vip',
+				url : '${basePath}/report/product?reportType=' + reportType +
+				'&reportDate=' + reportDate + '&producttypecode=' + producttypecode,
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
 				pagination : true,
 				nowrap: false,
-				toolbar: [{
-					text:'添加',
-					iconCls: 'icon-add',
-					handler: function(){addGoods();}
-				},'-',{
-					text:'修改',
-					iconCls: 'icon-edit',
-					handler: function(){updateGoods();}
-				},'-',{
-					text:'删除',
-					iconCls: 'icon-remove',
-					handler: function(){deleteGoods();}
-				}],
 				columns:[[
-				    {field : 'username',title : '顾客',halign:'center',width : 80},
-				    {field : 'orderNo',title : '订单号',halign:'center',width : 120},
-				    {field : 'pill',title : '订单总价',halign:'center',width : 120},
-				    {field : 'count',title : '订单数量',halign:'center',width : 150}
+				    {field : 'proname',title : '品名',halign:'center',width : 80},
+				    {field : 'counts',title : '数量',halign:'center',width : 120}
 				]]
 			});
 			
@@ -64,15 +56,11 @@
 		});
 		
 		function doSearch(){
-			var productNo = $("#productno").val();
-			var productName = $("#productname").val();
-			var productTypeCode = $("#producttypecode").val();
-			var productStandard = $("#productstandard").val();
-			$('#data-table').datagrid('reload',{
-				productno:productNo,productname:productName,producttype:productTypeCode,
-				productstandard:productStandard
-			} );
-			getCharts();
+			var reportType = $("#reportType").val();
+			var reportDate = $("#reportDate").val();
+			var producttypecode = $("#producttypecode").val();
+			window.location.href='${basePath}/report/productinit?reportType=' + reportType +
+					'&reportDate=' + reportDate + '&producttypecode=' + producttypecode;
 		}
 		function doClear(){
 			$("#productno").val("");
@@ -126,10 +114,16 @@
 	<div id="tb" title="查询条件区" class="easyui-panel"  style="padding:3px;width:85%" iconCls="icon-search">
 		<table align="left">
 			<tr>
-				<td><span>商品编码:</span></td>
-				<td><input id="productno" name="productno"/></td>
-				<td><span>商品名称:</span></td>
-				<td><input id="productname" name="productname"/></td>
+				<td><span>统计分类:</span></td>
+				<td>
+					<select id="reportType" name="reportType">
+		  				<option value="">---请选择---</option>
+		  				<option value="01">按月</option>
+	  					<option value="02">按日</option>
+		  			</select>
+				</td>
+				<td><span>统计时间:</span></td>
+				<td><input id="reportDate" name="reportDate"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
 				</td>

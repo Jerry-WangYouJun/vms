@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,11 @@ public class ReportController {
 	
 	@ResponseBody
 	@RequestMapping("/vip")
-	public Grid  getVipDataReport(ModelMap modelmap){
-		 List<Map<String,Object>> list =  orderDao.queryVipDataReport();
+	public Grid  getVipDataReport(String reportType , String reportDate){
+		Map params = new HashMap();
+		params.put("reportType", reportType);
+		params.put("reportDate", reportDate);
+		 List<Map<String,Object>> list =  orderDao.queryVipDataReport(params);
 		 Grid grid = new Grid();
 		 grid.setRows(list);
 		 grid.setTotal(Long.valueOf(list.size()));
@@ -39,27 +43,55 @@ public class ReportController {
 	
 	@ResponseBody
 	@RequestMapping("/vipinit")
-	public ModelAndView vipReportInit(){
-		ModelAndView  mv = new ModelAndView("vip_report");
+	public ModelAndView vipReportInit(String reportType, String reportDate) {
+		ModelAndView mv = new ModelAndView("vip_report");
 		JSONArray jsonarr = new JSONArray();
-		 List<Map<String,Object>> list =  orderDao.queryVipDataReport();
-		 for(Map<String,Object> mapTemp : list){
-			 JSONObject map = new JSONObject();
-			 map.put("value",mapTemp.get("pill").toString() ) ;
-			 map.put("name", mapTemp.get("username").toString() );
-			 jsonarr.add(map);
-		 }
-		 mv.addObject("mapdata", jsonarr);
-		 return mv ;
+		Map params = new HashMap();
+		params.put("reportType", reportType);
+		params.put("reportDate", reportDate);
+		List<Map<String, Object>> list = orderDao.queryVipDataReport(params);
+		List<String> nameList = new ArrayList<>();
+		List<String> valueList = new ArrayList<>();
+		for (Map<String, Object> mapTemp : list) {
+			JSONObject map = new JSONObject();
+			map.put("value", mapTemp.get("pill").toString());
+			map.put("name", mapTemp.get("username").toString());
+			nameList.add(mapTemp.get("username").toString());
+			valueList.add(mapTemp.get("pill").toString());
+		}
+		JSONArray json = new JSONArray();
+		json.addAll(nameList);
+		JSONArray valuejson = new JSONArray();
+		valuejson.addAll(valueList);
+		mv.addObject("data", json);
+		mv.addObject("valueData", valuejson);
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/product")
+	public Grid  getProductDataReport(String reportType , String reportDate , String producttypecode){
+		Map params = new HashMap();
+		params.put("reportType", reportType);
+		params.put("reportDate", reportDate);
+		params.put("producttypecode", producttypecode);
+		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport(params);
+		 Grid grid = new Grid();
+		 grid.setRows(list);
+		 grid.setTotal(Long.valueOf(list.size()));
+		 return grid ;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/productinit")
-	public ModelAndView productReportInit(){
+	public ModelAndView productReportInit(String reportType , String reportDate , String producttypecode){
 		ModelAndView  mv = new ModelAndView("product_report");
 		JSONArray jsonarr = new JSONArray();
-		// List<Map<String,Object>> list =  orderDao.queryVipDataReport();
-		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport();
+		Map params = new HashMap();
+		params.put("reportType", reportType);
+		params.put("reportDate", reportDate);
+		params.put("producttypecode", producttypecode);
+		List<Map<String,Object>> list =  orderDao.queryPorductDataReport(params);
 		 for(Map<String,Object> mapTemp : list){
 			 JSONObject map = new JSONObject();
 			 map.put("value",mapTemp.get("counts").toString() ) ;
@@ -67,6 +99,9 @@ public class ReportController {
 			 jsonarr.add(map);
 		 }
 		 mv.addObject("mapdata", jsonarr);
+		 mv.addObject("reportType", reportType);
+		 mv.addObject("reportDate", reportDate);
+		 mv.addObject("producttypecode", producttypecode);
 		 return mv ;
 	}
 	
@@ -74,8 +109,9 @@ public class ReportController {
 	@RequestMapping("/ajaxProduct")
 	public String ajaxProduct( String userName , HttpServletResponse response) throws Exception {
 		JSONArray jsonarr = new JSONArray();
+		Map params = new HashMap();
 		// List<Map<String,Object>> list =  orderDao.queryVipDataReport();
-		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport();
+		 List<Map<String,Object>> list =  orderDao.queryPorductDataReport(params);
 		 for(Map<String,Object> mapTemp : list){
 			 JSONObject map = new JSONObject();
 			 map.put("value",mapTemp.get("counts").toString() ) ;

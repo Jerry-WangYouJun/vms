@@ -8,26 +8,18 @@
 	<jsp:include page="/common.jsp"></jsp:include>
 	<script type="text/javascript">
 		$(function(){
+			$("#reportType").val("${reportType}");
+			$("#reportDate").val("${reportDate}");
+			var reportType = $("#reportType").val();
+			var reportDate = $("#reportDate").val();
 			$('#data-table').datagrid( {
-				url : '${basePath}/report/vip',
+				url : '${basePath}/report/vip?reportType=' + reportType +
+				'&reportDate=' + reportDate,
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
 				pagination : true,
 				nowrap: false,
-				toolbar: [{
-					text:'添加',
-					iconCls: 'icon-add',
-					handler: function(){addGoods();}
-				},'-',{
-					text:'修改',
-					iconCls: 'icon-edit',
-					handler: function(){updateGoods();}
-				},'-',{
-					text:'删除',
-					iconCls: 'icon-remove',
-					handler: function(){deleteGoods();}
-				}],
 				columns:[[
 				    {field : 'username',title : '顾客',halign:'center',width : 80},
 				    {field : 'orderNo',title : '订单号',halign:'center',width : 120},
@@ -64,14 +56,10 @@
 		});
 		
 		function doSearch(){
-			var productNo = $("#productno").val();
-			var productName = $("#productname").val();
-			var productTypeCode = $("#producttypecode").val();
-			var productStandard = $("#productstandard").val();
-			$('#data-table').datagrid('reload',{
-				productno:productNo,productname:productName,producttype:productTypeCode,
-				productstandard:productStandard
-			} );
+			var reportType = $("#reportType").val();
+			var reportDate = $("#reportDate").val();
+			window.location.href='${basePath}/report/vipinit?reportType=' + reportType +
+			'&reportDate=' + reportDate;
 		}
 		function doClear(){
 			$("#productno").val("");
@@ -125,25 +113,18 @@
 	<div id="tb" title="查询条件区" class="easyui-panel"  style="padding:3px;width:85%" iconCls="icon-search">
 		<table align="left">
 			<tr>
-				<td><span>商品编码:</span></td>
-				<td><input id="productno" name="productno"/></td>
-				<td><span>商品名称:</span></td>
-				<td><input id="productname" name="productname"/></td>
+				<td><span>统计分类:</span></td>
+				<td>
+					<select id="reportType" name="reportType">
+		  				<option value="">---请选择---</option>
+		  				<option value="01">按月</option>
+	  					<option value="02">按日</option>
+		  			</select>
+				</td>
+				<td><span>统计时间:</span></td>
+				<td><input id="reportDate" name="reportDate"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
-				</td>
-			</tr>
-			<tr>
-				<td><span>商品规格:</span></td>
-				<td><input id="productstandard" name="productstandard"/></td>
-				<td><span>商品分类:</span></td>
-				<td>
-					<select id="producttypecode" name="producttypecode">
-		  				<option value="">---请选择---</option>
-		  				<option value="饮品">---饮品---</option>
-	  					<option value="点心">---点心---</option>
-	  					<option value="特色">---特色---</option>
-		  			</select>
 				</td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-clear" onclick="doClear()">清除</a>
@@ -161,77 +142,50 @@
 	</div>
 	</body>
 	<script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-        var jsonstr="[{value:10, name:'直接访问'},{value:20, name:'邮件营销'},{value:70, name:'邮123营销12'}]";
-        var jsonarray = eval('('+jsonstr+')');
-        //  console.info(jsonarray[1]);
-        var arr  =
-             {
-                 "name" : $('#names').val(),
-                 "value" : $('#values').val()
-             }
-        var ttt = ${mapdata};
-        var arrs = [];
-        for(var i = 0 ; i < ttt.length ; i++){
-        	 arrs.push({name:ttt[i].name, value:ttt[i].value});
-        }
-        // 指定图表的配置项和数据
-        var option = {
-				title : {
-					text: 'VIP消费统计',
-					subtext: '纯属虚构',
-					x:'center'
-				},
-				tooltip : {
-					trigger: 'item',
-					formatter: "{a} <br/>{b} : {c} ({d}%)"
-				},
-				
-				toolbox: {
-					show : true,
-					feature : {
-						mark : {show: true},
-						dataView : {show: true, readOnly: false},
-						magicType : {
-							show: true, 
-							type: ['pie', 'funnel'],
-							option: {
-								funnel: {
-									x: '25%',
-									width: '50%',
-									funnelAlign: 'left',
-									max: 1548
-								}
-							}
-						},
-						restore : {show: true},
-						saveAsImage : {show: true}
-					}
-				},
-				calculable : true,
-				series : [
-					{
-						name:'访问来源',
-						type:'pie',
-						radius : '55%',
-						center: ['50%', '60%'],
-						data:(function(){
-                            var res = [];
-                            var len = 0;
-                            for(var i = 0 ; i < ttt.length ; i++) {
-	                            res.push({
-	                            	name:ttt[i].name, 
-	                            	value:ttt[i].value
-	                            });
-                            }
-                            return res;
-                            })()
-					}
-				]
-		};
+	 // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'), 'dark');
+	var   nameList = ${data} ;
+	var  valueList = ${valueData}
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: nameList
+        },
+        yAxis: {},
+        series: [{
+        	itemStyle: {
+                normal: {
+                    color: function(params) {
+                        // build a color map as your need.
+                        var colorList = [
+                          '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                           '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                           '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                        ];
+                        return colorList[params.dataIndex]
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+//                         formatter: '{c}'
+                        formatter: '{b}\n{c}'
+                    }
+                }
+            },
+            name: '销量',
+            type: 'bar',
+            data: valueList
+        }]
+    };
 
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
 	</script>
 </html>

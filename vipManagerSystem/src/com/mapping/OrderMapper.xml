@@ -10,23 +10,41 @@
 		<result column="userId" property="userId" jdbcType="INTEGER" />
 		<result column="count" property="count" jdbcType="INTEGER" />
 		<result column="orderDate" property="orderDate" jdbcType="VARCHAR" />
+		<result column="pillType" property="pillType" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<select id="queryVipDataReport" resultType="java.util.HashMap"  parameterType="java.util.HashMap">
 	    select
 		 o.orderNo , sum(o.pill) pill , sum(o.count)count , o.username  , o.discount
 		from t_order o left join  t_user u  on o.userid = u.id 
-		where 1=1 group by o.username  
+		where 1=1
+		<if test="reportType != null and reportType != '' and reportType == '01' " >
+		        and o.orderDate like concat(concat('',#{reportDate}),'%') 
+		</if>
+		<if test="reportType != null and reportType != '' and reportType == '02' " >
+		        and o.orderDate  = #{reportDate}  
+		</if>
+		 group by o.username  
 	</select>
 	
   	<select id="queryPorductDataReport" resultType="java.util.HashMap"  parameterType="java.util.HashMap">
 	    select sum(d.count) counts , g.productname proname from 
 		   t_order o  , t_order_detail d   , goods g
-		   where  o.id = d.orderId  and d.goodId=g.id group by goodid 
+		   where  o.id = d.orderId  and d.goodId=g.id
+		<if test="reportType != null and reportType != '' and reportType == '01' " >
+		        and o.orderDate like concat(concat('',#{reportDate}),'%') 
+		</if>
+		<if test="reportType != null and reportType != '' and reportType == '02' " >
+		        and o.orderDate  = #{reportDate}  
+		</if>
+		<if test="producttypecode != null and producttypecode != '' " >
+		        and g.producttype  = #{producttypecode}  
+		</if>
+		    group by goodid 
 	</select>
 	
 	<sql id="Base_Column_List">
-		ID, orderNo, userId, count,username,discount,orderDate,
+		ID, orderNo, userId, count,username,discount,orderDate, pillType,
 		pill
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -58,6 +76,9 @@
 		<if test="pill != null and pill != ''">
 			and pill = #{pill}
 		</if>
+		<if test="pillType != null and pillType != ''">
+			and pillType = #{pillType}
+		</if>
 	</select>
 
 	<select id="selectOrderByWhere" resultMap="BaseResultMap"
@@ -80,6 +101,9 @@
 		</if>
 		<if test="pill != null and pill != ''">
 			and pill = #{pill}
+		</if>
+		<if test="pillType != null and pillType != ''">
+			and pillType = #{pillType}
 		</if>
 	</select>
 
@@ -104,6 +128,9 @@
 		<if test="pill != null and pill != ''">
 			and pill = #{pill}
 		</if>
+		<if test="pillType != null and pillType != ''">
+			and pillType = #{pillType}
+		</if>
 		<if test="q != null and q != ''">
 			and orderNo like #{q}
 		</if>
@@ -117,11 +144,11 @@
 	</delete>
 	<insert id="insert" parameterType="com.pojo.Order">
 		insert into t_order(ID, orderNo, userId,
-		count, pill , username , discount,orderDate)
+		count, pill ,pillType, username , discount,orderDate)
 		values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR},
 		#{userId,jdbcType=INTEGER},
 		#{count,jdbcType=INTEGER},
-		#{pill,jdbcType=DECIMAL} , #{userName,jdbcType=VARCHAR} , #{discount,jdbcType=DECIMAL}, #{orderDate,jdbcType=VARCHAR})
+		#{pill,jdbcType=DECIMAL} ,#{pillType,jdbcType=VARCHAR} , #{userName,jdbcType=VARCHAR} , #{discount,jdbcType=DECIMAL}, #{orderDate,jdbcType=VARCHAR})
 		<selectKey resultType="Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() AS id
 		</selectKey>
@@ -147,6 +174,9 @@
 			<if test="pill != null">
 				pill,
 			</if>
+			<if test="pillType != null">
+				pillType,
+			</if>
 			<if test="discount != null">
 				discount,
 			</if>
@@ -169,6 +199,9 @@
 			</if>
 			<if test="pill != null">
 				#{pill,jdbcType=DECIMAL},
+			</if>
+			<if test="pillType != null">
+				#{pillType,jdbcType=VARCHAR},
 			</if>
 			<if test="discount != null">
 				#{discount,jdbcType=DECIMAL},
@@ -193,6 +226,9 @@
 			<if test="pill != null">
 				pill = #{pill,jdbcType=DECIMAL},
 			</if>
+			<if test="pillType != null">
+				pillType = #{pillType,jdbcType=VARCHAR},
+			</if>
 			<if test="discount != null">
 				discount = #{discount,jdbcType=DECIMAL},
 			</if>
@@ -205,6 +241,7 @@
 		userId = #{userId,jdbcType=INTEGER},
 		count = #{count,jdbcType=INTEGER},
 		pill = #{pill,jdbcType=DECIMAL},
+		pillType = #{pillType,jdbcType=VARCHAR},
 		discount = #{discount,jdbcType=DECIMAL},
 		where ID = #{id,jdbcType=INTEGER}
 	</update>

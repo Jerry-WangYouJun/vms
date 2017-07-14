@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50130
+Source Server         : 127.0.0.1
+Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : vms
 
 Target Server Type    : MYSQL
-Target Server Version : 50130
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-07-13 06:29:47
+Date: 2017-07-14 17:27:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `goods`
+-- Table structure for goods
 -- ----------------------------
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
@@ -39,7 +39,7 @@ INSERT INTO `goods` VALUES ('3', '2', '布丁', '点心', '222', '2', '222.00', 
 INSERT INTO `goods` VALUES ('4', '3', '绿茶', '饮品', '33', '33', '33.00', '33');
 
 -- ----------------------------
--- Table structure for `t_order`
+-- Table structure for t_order
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
@@ -49,26 +49,28 @@ CREATE TABLE `t_order` (
   `orderNo` varchar(20) DEFAULT NULL,
   `orderDate` varchar(20) DEFAULT NULL,
   `pill` double(8,2) DEFAULT NULL,
+  `pillType` varchar(5) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   `discount` double(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES ('8', '2', '112', '1', null, '233.00', '2', null);
-INSERT INTO `t_order` VALUES ('9', '4', 'aacasd', '1', null, '110.00', '10', null);
-INSERT INTO `t_order` VALUES ('10', '3', 'bb', '11', null, '233.00', '2', null);
-INSERT INTO `t_order` VALUES ('11', '2', '112', '11', null, '454.00', '3', '1.00');
-INSERT INTO `t_order` VALUES ('12', '3', 'aaaaaa', '11', null, '111.00', '1111', null);
-INSERT INTO `t_order` VALUES ('13', null, 'm,nlkmjkl', '111', null, '11.00', '1', null);
-INSERT INTO `t_order` VALUES ('14', null, 'hhh', '111', null, '11.00', '1', null);
-INSERT INTO `t_order` VALUES ('15', '3', 'aaaaaaaaa', 'iuiui', null, '55.00', '5', null);
-INSERT INTO `t_order` VALUES ('16', '2', '112', '1111', '2017-07-12', '21.00', '2', '1.00');
+INSERT INTO `t_order` VALUES ('8', '2', '112', '1', null, '233.00', null, '2', null);
+INSERT INTO `t_order` VALUES ('9', '4', 'aacasd', '1', null, '110.00', null, '10', null);
+INSERT INTO `t_order` VALUES ('10', '3', 'bb', '11', null, '233.00', null, '2', null);
+INSERT INTO `t_order` VALUES ('11', '2', '112', '11', null, '454.00', null, '3', '1.00');
+INSERT INTO `t_order` VALUES ('12', '3', 'aaaaaa', '11', null, '111.00', null, '1111', null);
+INSERT INTO `t_order` VALUES ('13', null, 'm,nlkmjkl', '111', null, '11.00', null, '1', null);
+INSERT INTO `t_order` VALUES ('14', null, 'hhh', '111', null, '11.00', null, '1', null);
+INSERT INTO `t_order` VALUES ('15', '3', 'aaaaaa', 'iuiui', null, '55.00', '01', '5', null);
+INSERT INTO `t_order` VALUES ('16', '2', '112', '1111', '2017-07-12', '21.00', null, '2', '1.00');
+INSERT INTO `t_order` VALUES ('17', '2', '112', '', '2017-07-14', '232.00', '01', '2', '1.00');
 
 -- ----------------------------
--- Table structure for `t_order_detail`
+-- Table structure for t_order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order_detail`;
 CREATE TABLE `t_order_detail` (
@@ -77,7 +79,7 @@ CREATE TABLE `t_order_detail` (
   `goodId` int(11) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order_detail
@@ -87,15 +89,17 @@ INSERT INTO `t_order_detail` VALUES ('4', '8', '3', '1');
 INSERT INTO `t_order_detail` VALUES ('17', '9', '1', '10');
 INSERT INTO `t_order_detail` VALUES ('19', '13', '1', '1');
 INSERT INTO `t_order_detail` VALUES ('20', '14', '1', '1');
-INSERT INTO `t_order_detail` VALUES ('21', '15', '1', '5');
 INSERT INTO `t_order_detail` VALUES ('22', '10', '1', '1');
 INSERT INTO `t_order_detail` VALUES ('23', '10', '3', '1');
 INSERT INTO `t_order_detail` VALUES ('26', '11', '1', '1');
 INSERT INTO `t_order_detail` VALUES ('27', '11', '3', '2');
 INSERT INTO `t_order_detail` VALUES ('28', '16', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('29', '17', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('30', '17', '3', '1');
+INSERT INTO `t_order_detail` VALUES ('31', '15', '1', '5');
 
 -- ----------------------------
--- Table structure for `t_recharge`
+-- Table structure for t_recharge
 -- ----------------------------
 DROP TABLE IF EXISTS `t_recharge`;
 CREATE TABLE `t_recharge` (
@@ -115,7 +119,7 @@ CREATE TABLE `t_recharge` (
 -- Records of t_recharge
 -- ----------------------------
 INSERT INTO `t_recharge` VALUES ('2', '2', null, '1', '2', '16', '1', '115', null);
-INSERT INTO `t_recharge` VALUES ('3', '2', null, '1111', '111', null, '111', '222', null);
+INSERT INTO `t_recharge` VALUES ('3', '4', null, '1111', '111', '1', '111', '1', null);
 INSERT INTO `t_recharge` VALUES ('4', '3', null, '11', '111', null, '111', '112', null);
 INSERT INTO `t_recharge` VALUES ('5', '3', null, '111', '111', null, '11', '134', null);
 INSERT INTO `t_recharge` VALUES ('6', '2', null, '1', '1', '1', '1', '1', null);
@@ -125,7 +129,7 @@ INSERT INTO `t_recharge` VALUES ('9', '3', null, '1', '1', '16', '1', '115', '20
 INSERT INTO `t_recharge` VALUES ('10', '2', null, '1', '1', '16', '1', '115', '2017-07-12');
 
 -- ----------------------------
--- Table structure for `t_user`
+-- Table structure for t_user
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (

@@ -231,6 +231,16 @@ textarea {
 	         }  
 	         $('#user_namelist_div').css('display', 'none'); //点击的不是div或其子元素   
 	     });
+		 $(function(){
+				//initDictionarySelect("province", "#provinceCode",$("#provinceCodeDB").val());
+				 var option = $("option");
+				 for(var i = 0 ; i < option.length ; i ++){
+					  if("${order.pillType }" == option[i].value){
+						  option[i].selected = "selected";
+					  }
+					 	  
+				 }
+			});
 </script>
 </head>
 <body>
@@ -264,6 +274,16 @@ textarea {
 			<tr>
 				<td>总数量：</td>
 				<td><input type="text" name="count" id = "count"  size="14" value="${order.count }"></input></td>
+				<td>支付方式：</td>
+				<td>
+					 <select id="pillType" name = "pillType" >
+					 		<option value="">---请选择---</option>
+					 		<option value="01">---会员卡扣费---</option>
+					 		<option value="02">---其他方式---</option>
+					 </select>
+				</td>
+			</tr>
+			<tr>
 				<td valign="top" colspan="">备注：</td>
 				<td colspan="5"><textarea rows="2" cols="15" name="remark"></textarea>
 				</td>

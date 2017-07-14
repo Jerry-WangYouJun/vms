@@ -34,6 +34,13 @@
 				    {field : 'userName',title : '顾客',halign:'center',width : 150},
 				    {field : 'count',title : '数量',halign:'center',width : 80},
 				    {field : 'pill',title : '总价',halign:'center',width : 80}, 
+				    {field : 'pillType',title : '支付方式',halign:'center',width : 80 , formatter:function(value,rowData,rowIndex){
+			    		if (value == "01") {
+							return "会员卡扣费";
+						}else {
+							return "其他方式";
+						}
+			    }}, 
 				    {field : 'orderDate',title : '时间',halign:'center',width : 80}, 
 				]],
 			 view: detailview,

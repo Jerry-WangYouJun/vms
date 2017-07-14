@@ -9,30 +9,23 @@
 	<script type="text/javascript">
 		$(function(){
 			$('#data-table').datagrid( {
-				url : '${basePath}/report/vip',
+				url : '${basePath}/report/gain',
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
 				pagination : true,
 				nowrap: false,
-				toolbar: [{
-					text:'添加',
-					iconCls: 'icon-add',
-					handler: function(){addGoods();}
-				},'-',{
-					text:'修改',
-					iconCls: 'icon-edit',
-					handler: function(){updateGoods();}
-				},'-',{
-					text:'删除',
-					iconCls: 'icon-remove',
-					handler: function(){deleteGoods();}
-				}],
 				columns:[[
 				    {field : 'username',title : '顾客',halign:'center',width : 80},
-				    {field : 'orderNo',title : '订单号',halign:'center',width : 120},
-				    {field : 'pill',title : '订单总价',halign:'center',width : 120},
-				    {field : 'count',title : '订单数量',halign:'center',width : 150}
+				    {field : '时间段',title : '订单号',halign:'center',width : 120},
+				    {field : 'lirun',title : '利润',halign:'center',width : 120},
+				    {field : 'pillType',title : '支付类型',halign:'center',width : 150 ,formatter:function(value,rowData,rowIndex){
+			    		if (value == "01") {
+							return "会员卡扣费";
+						}else {
+							return "其他"
+						} 
+			   		 }}
 				]]
 			});
 			
