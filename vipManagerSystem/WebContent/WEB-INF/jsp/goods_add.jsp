@@ -46,9 +46,10 @@
 	  		<td>
 	  			<select id="productTypeCode" name="producttype">
 	  				<option value="">---请选择---</option>
-	  				<option value="饮品">---饮品---</option>
-	  				<option value="点心">---点心---</option>
-	  				<option value="特色">---特色---</option>
+	  				<option value="饮品">---咖啡---</option>
+	  				<option value="点心">---冷饮---</option>
+	  				<option value="茶">---茶---</option>
+	  				<option value="本店特色">---本店特色---</option>
 	  			</select>
 	  		</td>
 	  	</tr>
