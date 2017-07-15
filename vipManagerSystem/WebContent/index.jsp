@@ -34,19 +34,9 @@
 						url:"${basePath}/init/user_list"
 					}
 				},{
-					text:"积分管理",
-					attributes:{
-						url:"${basePath}/init/dept_list"
-					}
-				},{
 					text:"产品管理",
 					attributes:{
 						url:"${basePath}/init/goods_list"
-					}
-				},{
-					text:"VIP设置",
-					attributes:{
-						url:"${basePath}/init/supplier_list"
 					}
 				}]
 			},{
@@ -60,11 +50,6 @@
 					text:"会员充值管理",
 					attributes:{
 						url:"${basePath}/init/recharge_list"
-					}
-				},{
-					text:"成本管理",
-					attributes:{
-						url:"${basePath}/init/role_list"
 					}
 				}]
 			},{
