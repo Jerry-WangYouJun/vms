@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserServiceI {
 	@Override
 	public int inserUser(User user) {
 		// TODO Auto-generated method stub
-		return this.userDao.insert(user);
+		return this.userDao.insertSelective(user);
 	}
 
 

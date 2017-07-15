@@ -11,7 +11,7 @@
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
     <result column="level" property="level" jdbcType="INTEGER" />
-    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="score" property="score" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID,  vip,  birthday, address, balance, sex, telephone, username, level ,score
@@ -78,7 +78,7 @@
     values (#{id,jdbcType=INTEGER},  #{vip,jdbcType=VARCHAR}, 
        #{birthday,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{balance,jdbcType=DOUBLE}, #{sex,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{username,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER} , #{score,jdbcType=DOUBLE})
+      #{username,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER} , #{score,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.User" >
     insert into t_user
@@ -95,7 +95,7 @@
       <if test="address != null" >
         address,
       </if>
-      <if test="balance != null" >
+      <if test="balance != null and balance != 0 " >
         balance,
       </if>
       <if test="sex != null" >
@@ -107,10 +107,10 @@
       <if test="username != null" >
         username,
       </if>
-      <if test="level != null" >
+      <if test="level != null and level != 0" >
         level,
       </if>
-      <if test="score != null" >
+      <if test="score != null and score != 0" >
         score,
       </if>
     </trim>
@@ -127,7 +127,7 @@
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
       </if>
-      <if test="balance != null" >
+      <if test="balance != null and balance != 0" >
         #{balance,jdbcType=DOUBLE},
       </if>
       <if test="sex != null" >
@@ -139,11 +139,11 @@
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="userno != null" >
-        #{userno,jdbcType=VARCHAR},
+      <if test="level != null and level != 0" >
+        #{level,jdbcType=INTEGER},
       </if>
-      <if test="score != null" >
-        #{score,jdbcType=DOUBLE},
+      <if test="score != null and score != 0" >
+        #{score,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -171,11 +171,11 @@
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="level != null" >
+      <if test="level != null and level != 0" >
         level = #{level,jdbcType=INTEGER},
       </if>
-      <if test="score != null" >
-        score = #{score,jdbcType=DOUBLE},
+      <if test="score != null and score != 0" >
+        score = #{score,jdbcType=INTEGER},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -191,7 +191,7 @@
       telephone = #{telephone,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       level = #{level,jdbcType=INTEGER},
-      score=#{score,jdbcType=DOUBLE}
+      score=#{score,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
