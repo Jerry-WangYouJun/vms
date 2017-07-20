@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.core.model.Grid;
+import com.github.pagehelper.StringUtil;
 import com.mapping.OrderMapper;
 
 @Controller
@@ -30,10 +30,11 @@ public class ReportController {
 	
 	@ResponseBody
 	@RequestMapping("/vip")
-	public Grid  getVipDataReport(String reportType , String reportDate){
+	public Grid  getVipDataReport(String reportType , String reportDate , String userName){
 		Map params = new HashMap();
 		params.put("reportType", reportType);
 		params.put("reportDate", reportDate);
+		params.put("userName", userName);
 		 List<Map<String,Object>> list =  orderDao.queryVipDataReport(params);
 		 Grid grid = new Grid();
 		 grid.setRows(list);
@@ -43,12 +44,13 @@ public class ReportController {
 	
 	@ResponseBody
 	@RequestMapping("/vipinit")
-	public ModelAndView vipReportInit(String reportType, String reportDate) {
+	public ModelAndView vipReportInit(String reportType, String reportDate , String userName) {
 		ModelAndView mv = new ModelAndView("vip_report");
 		JSONArray jsonarr = new JSONArray();
 		Map params = new HashMap();
 		params.put("reportType", reportType);
 		params.put("reportDate", reportDate);
+		params.put("userName", userName);
 		List<Map<String, Object>> list = orderDao.queryVipDataReport(params);
 		List<String> nameList = new ArrayList<>();
 		List<String> valueList = new ArrayList<>();
@@ -63,6 +65,15 @@ public class ReportController {
 		json.addAll(nameList);
 		JSONArray valuejson = new JSONArray();
 		valuejson.addAll(valueList);
+		if(StringUtil.isNotEmpty(reportType)){
+			mv.addObject("reportType", reportType);
+		}
+		if(StringUtil.isNotEmpty(reportDate)){
+			mv.addObject("reportDate", reportDate);		
+		}
+		if(StringUtil.isNotEmpty(userName)){
+			mv.addObject("userName", userName);
+		}
 		mv.addObject("data", json);
 		mv.addObject("valueData", valuejson);
 		return mv;

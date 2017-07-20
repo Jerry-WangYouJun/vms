@@ -10,11 +10,13 @@
 		$(function(){
 			$("#reportType").val("${reportType}");
 			$("#reportDate").val("${reportDate}");
+			$("#userName").val("${userName}");
 			var reportType = $("#reportType").val();
 			var reportDate = $("#reportDate").val();
+			var userName = $("#userName").val();
 			$('#data-table').datagrid( {
 				url : '${basePath}/report/vip?reportType=' + reportType +
-				'&reportDate=' + reportDate,
+				'&reportDate=' + reportDate + '&userName=' + userName,
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
@@ -58,54 +60,14 @@
 		function doSearch(){
 			var reportType = $("#reportType").val();
 			var reportDate = $("#reportDate").val();
+			var userName = $("#userName").val();
 			window.location.href='${basePath}/report/vipinit?reportType=' + reportType +
-			'&reportDate=' + reportDate;
+			'&reportDate=' + reportDate + '&userName=' + userName;
 		}
 		function doClear(){
-			$("#productno").val("");
-			$("#productname").val("");
-			$("#producttypecode").val("");
-			$("#productstandard").val("");
-		}
-		function addGoods(){
-			var path = "${basePath}/init/goods_add";
-			document.getElementById('frameContent').src = path;
-			$('#dlg-frame').dialog('open');
-		}
-		
-		function updateGoods(){
-			var obj = $('#data-table').datagrid('getSelected');
-			if (obj == null || obj.id == null) {
-				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
-				return;
-			}		
-			var path = "${basePath}/goods/updateinit?id=" + obj.id;
-			document.getElementById('frameContent').src = path;
-			$('#dlg-frame').dialog('open');
-		}
-		
-		function deleteGoods(){
-			var obj = $('#data-table').datagrid('getSelected');
-			if (obj == null || obj.id == null) {
-				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
-				return;
-			}	
-			var url = "${basePath}/goods/delete";
-			$.ajax( {
-				url : url,
-				type : 'post',
-				data : {
-					id : obj.id
-				},
-				dataType : 'text',
-				success : function(data) {
-					if(data>0)
-					doSearch();
-				},
-				error : function(transport) {
-					$.messager.alert('提示', "系统产生错误,请联系管理员!", "error");
-				}
-			});
+			$("#reportType").val("");
+			$("#reportDate").val("");
+			$("#userName").val(""); 
 		}
 	</script>
 </head>
@@ -123,6 +85,8 @@
 				</td>
 				<td><span>统计时间:</span></td>
 				<td><input id="reportDate" name="reportDate"/></td>
+				<td><span>会员:</span></td>
+				<td><input id="userName" name="userName"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
 				</td>

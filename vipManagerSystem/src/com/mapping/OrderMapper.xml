@@ -24,6 +24,9 @@
 		<if test="reportType != null and reportType != '' and reportType == '02' " >
 		        and o.orderDate  = #{reportDate}  
 		</if>
+		<if test="userName != null and userName != ''" >
+		        and o.username  = #{userName}  
+		</if>
 		 group by o.username  
 	</select>
 	
