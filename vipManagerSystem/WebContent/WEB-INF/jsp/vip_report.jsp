@@ -113,11 +113,11 @@
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: 'ECharts 入门示例'
+            text: '会员消费统计'
         },
         tooltip: {},
         legend: {
-            data:['销量']
+            data:['消费总额']
         },
         xAxis: {
             data: nameList
@@ -143,7 +143,7 @@
                     }
                 }
             },
-            name: '销量',
+            name: '消费总额',
             type: 'bar',
             data: valueList
         }]

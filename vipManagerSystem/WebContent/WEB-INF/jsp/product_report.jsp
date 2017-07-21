@@ -68,46 +68,6 @@
 			$("#producttypecode").val("");
 			$("#productstandard").val("");
 		}
-		function addGoods(){
-			var path = "${basePath}/init/goods_add";
-			document.getElementById('frameContent').src = path;
-			$('#dlg-frame').dialog('open');
-		}
-		
-		function updateGoods(){
-			var obj = $('#data-table').datagrid('getSelected');
-			if (obj == null || obj.id == null) {
-				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
-				return;
-			}		
-			var path = "${basePath}/goods/updateinit?id=" + obj.id;
-			document.getElementById('frameContent').src = path;
-			$('#dlg-frame').dialog('open');
-		}
-		
-		function deleteGoods(){
-			var obj = $('#data-table').datagrid('getSelected');
-			if (obj == null || obj.id == null) {
-				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
-				return;
-			}	
-			var url = "${basePath}/goods/delete";
-			$.ajax( {
-				url : url,
-				type : 'post',
-				data : {
-					id : obj.id
-				},
-				dataType : 'text',
-				success : function(data) {
-					if(data>0)
-					doSearch();
-				},
-				error : function(transport) {
-					$.messager.alert('提示', "系统产生错误,请联系管理员!", "error");
-				}
-			});
-		}
 	</script>
 </head>
 <body>
@@ -175,7 +135,6 @@
         var option = {
 				title : {
 					text: 'VIP消费统计',
-					subtext: '纯属虚构',
 					x:'center'
 				},
 				tooltip : {
@@ -246,8 +205,7 @@
 		});
 		option = {
 				title : {
-					text: 'VIP消费统计',
-					subtext: '纯属虚构',
+					text: '饮品消费分类统计',
 					x:'center'
 				},
 				tooltip : {

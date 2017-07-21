@@ -134,10 +134,11 @@
 				<td>
 					<select id="producttypecode" name="producttypecode">
 		  				<option value="">---请选择---</option>
-		  				<option value="饮品">---饮品---</option>
-	  					<option value="点心">---点心---</option>
-	  					<option value="特色">---特色---</option>
-		  			</select>
+						<option value="咖啡">---咖啡---</option>
+						<option value="冷饮">---冷饮---</option>
+						<option value="茶">---茶---</option>
+						<option value="本店特色">---本店特色---</option>
+				</select>
 				</td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-clear" onclick="doClear()">清除</a>
@@ -162,7 +163,7 @@
         // 指定图表的配置项和数据
         var option = {
             title: {
-                text: 'ECharts 入门示例'
+                text: '营业毛利润'
             },
             tooltip: {},
             legend: {
