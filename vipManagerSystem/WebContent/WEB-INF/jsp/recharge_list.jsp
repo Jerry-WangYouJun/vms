@@ -115,13 +115,12 @@
 				data : {
 					id : obj.id
 				},
-				dataType : 'json',
+				dataType : 'text',
 				success : function(data) {
-					if(data.success){
-						$.messager.alert('提示',data.msg);
+					if(data>0){
 						doSearch();
 					}else{
-						$.messager.alert('提示',data.msg,"error");
+						$.messager.alert('提示',"删除失败","error");
 					}
 					
 				},
