@@ -36,9 +36,9 @@
 				    {field : 'username',title : '用户姓名',halign:'center',width : 80},
 				    {field : 'sex',title : '性别',halign:'center',width : 80,formatter:function(value,rowData,rowIndex){
 				    		if(value == "1"){
-				    			return "女";
-				    		}else if(value == "0"){
 				    			return "男";
+				    		}else if(value == "0"){
+				    			return "女";
 				    		}else{
 				    			return "";
 				    		}
