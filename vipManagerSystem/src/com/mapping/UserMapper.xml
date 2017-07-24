@@ -10,7 +10,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
-    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -78,7 +78,7 @@
     values (#{id,jdbcType=INTEGER},  #{vip,jdbcType=VARCHAR}, 
        #{birthday,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{balance,jdbcType=DOUBLE}, #{sex,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{username,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER} , #{score,jdbcType=INTEGER})
+      #{username,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR} , #{score,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.User" >
     insert into t_user
@@ -107,7 +107,7 @@
       <if test="username != null" >
         username,
       </if>
-      <if test="level != null and level != 0" >
+      <if test="level != null and level != '' " >
         level,
       </if>
       <if test="score != null and score != 0" >
@@ -139,8 +139,8 @@
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="level != null and level != 0" >
-        #{level,jdbcType=INTEGER},
+      <if test="level != null and level != ''" >
+        #{level,jdbcType=VARCHAR},
       </if>
       <if test="score != null and score != 0" >
         #{score,jdbcType=INTEGER},
@@ -171,8 +171,8 @@
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="level != null and level != 0" >
-        level = #{level,jdbcType=INTEGER},
+      <if test="level != null and level != ''" >
+        level = #{level,jdbcType=VARCHAR},
       </if>
       <if test="score != null and score != 0" >
         score = #{score,jdbcType=INTEGER},
@@ -190,7 +190,7 @@
       sex = #{sex,jdbcType=VARCHAR},
       telephone = #{telephone,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
-      level = #{level,jdbcType=INTEGER},
+      level = #{level,jdbcType=VARCHAR},
       score=#{score,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
