@@ -40,9 +40,10 @@
   
   <select id="selectUserByWhere" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select 
-    <include refid="Base_Column_List" />
-    from t_user
-    where 1=1
+        u.ID,  u.vip,  u.birthday, u.address, 
+        t.totalMoney balance, u.sex, u.telephone, u.username, u.level , t.totalPoints score
+    from t_user u , t_recharge t
+    where  u.id = t.userid
        <if test="vip != null and vip != '' " >
         and vip like concat(concat('%',#{vip}),'%') 
       </if>
@@ -55,8 +56,8 @@
     <select id="selectUserCountByWhere" resultType="java.lang.Long" parameterType="java.util.HashMap" >
     select 
     	count(*) 
-    from t_user
-    where 1=1
+    from t_user u , t_recharge t
+    where  u.id = t.userid
         <if test="vip != null and vip != '' " >
         and vip like concat(concat('%',#{vip}),'%') 
       </if>

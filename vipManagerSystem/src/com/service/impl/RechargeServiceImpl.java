@@ -55,8 +55,6 @@ public class RechargeServiceImpl implements RechargeServiceI {
 			 User user = userDao.selectByPrimaryKey(rec.getUserId());
 			 if(user != null){
 				  rec.setUserName(user.getUsername());
-				  rec.setTotalMoney(Double.valueOf(user.getBalance()));
-				  rec.setTotalPoints(Integer.valueOf(user.getScore()));
 			 }
 		}
 		Long total = this.rechargeDao.findRechargeCountByWhere(recharge);

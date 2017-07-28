@@ -160,10 +160,11 @@ textarea {
 	<form id="rechargeForm"
 		action="${basePath}/admin/OrderServlet?flag=insert" method="post">
 		<table width="100%" >
-		     <input type="hidden" name="selectIndex" id="selectIndex"  />
+		     
 			<tr>
 				<td>客户：</td>
-				<td><input type="text" name="userName" id="userName" size="14"  onchange="checkUser(this.value)" />
+				<td><input type="text" name="userName" id="userName" size="14"  onchange="checkUser(this.value)"/>
+				<input type="hidden" name="selectIndex" id="selectIndex"  />
 					<div id="user_namelist_div"
 						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
 						<table class="list_tab">

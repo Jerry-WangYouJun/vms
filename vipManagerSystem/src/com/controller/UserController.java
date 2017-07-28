@@ -85,9 +85,6 @@ public class UserController {
 		Grid grid = new Grid();
 		
 		List<User> results = this.userService.findUserWhereSql(params);
-		for(User user : results){
-			  List<Recharge>  list = rechargeService.findByAjax("");
-		} 
 		Long total = this.userService.findUserCountByWhere(params);
 		grid.setRows(results);
 		grid.setTotal(total);
@@ -154,8 +151,9 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/ajaxUserName")
-	public String ajaxUserName( String userName , HttpServletResponse response) throws Exception {
+	@RequestMapping(value ="/ajaxUserName" )
+	public String ajaxUserName( String userName , HttpServletResponse response  , HttpServletRequest request) throws Exception {
+		System.out.println(userName);
 		Map params = new HashMap();
 		params.put("username", userName);
 		List<User> list = this.userService.findUserWhereSql(params);

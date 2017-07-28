@@ -57,21 +57,11 @@ public class RechargeController {
 		if(recharge.getUserId() == null ){
 			User user =  new User();
 			user.setUsername(recharge.getUserName());
-			user.setScore(recharge.getTotalPoints() + "");
-			user.setBalance(recharge.getTotalMoney() + "");
 			userDao.insert(user);
 			recharge.setUserId(user.getId());
 		}
 		int count  = this.rechargeService.addRecharge(recharge) ;
-		if(count > 0 ){
-				User user = userDao.selectByPrimaryKey(recharge.getUserId());
-				if(user!= null){
-					user.setBalance(recharge.getTotalMoney() + "");
-					user.setScore(recharge.getTotalPoints()+ "");
-				}
-				userDao.updateByPrimaryKey(user);
-		}
-		 return count;
+		return count;
 	}
 	
 	@ResponseBody
@@ -84,12 +74,6 @@ public class RechargeController {
 	@RequestMapping("/updateinit")
 	public ModelAndView updateRechargeInit(@RequestParam int id ){
 		Recharge recharge= this.rechargeDao.selectByPrimaryKey(id);
-		 User user = userDao.selectByPrimaryKey(recharge.getUserId());
-		 if(user != null){
-			 recharge.setTotalMoney(Double.valueOf(user.getBalance()));
-			 recharge.setTotalPoints(Integer.valueOf(user.getScore()));
-			 recharge.setUserName(user.getUsername());
-		 }
 		Map<String,Object> model =new HashMap<String,Object>();
 		model.put("recharge",recharge);//userlist是个Arraylist之类的  
 		return new ModelAndView("recharge_update", model); 
