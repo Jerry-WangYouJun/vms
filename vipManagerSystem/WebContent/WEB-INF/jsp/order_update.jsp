@@ -69,9 +69,10 @@ textarea {
 	    //添加列内容
 		newNameTD.innerHTML = "<select style='width:70px;' name='way_." + xuhao + "' id='way_" + xuhao + "' onchange='change(this)'>"
 						 +" <option  value=''>请选择</option> "				
-						 +" <option  value='饮品'>饮品</option> "
-						 +" <option value='点心'>点心</option>  "
-						 +" <option value='特色'>特色</option>  "
+						 +" <option value='咖啡'>--咖啡--</option> "
+						 +" <option value='冷饮'>--冷饮--</option>  "
+						 +"  <option value='茶'>--茶--</option>"
+						 +" <option value='特色'>--特色--</option>  "
 						 +"  </select>";
 		//添加列:品名
 	    var newEmailTD=newTR.insertCell(2);
@@ -104,13 +105,15 @@ textarea {
 			$("#price_" + obj.id.split("_")[1]).empty();
 			var str = ${model};
 			var list  ; 
-		 if(obj.value=='饮品'){
-			  list = str.drink;
-		 }else if(obj.value=='点心'){
-			   list = str.food;
-		 }else if(obj.value=='特色'){
-			   list = str.food;
-		 }
+			if(obj.value=='咖啡'){
+				  list = str.drink;
+			 }else if(obj.value=='冷饮'){
+				   list = str.food;
+			 }else if(obj.value=='特色'){
+				   list = str.special;
+			 }else if(obj.value=='茶'){
+				 list = str.tea;
+			 }
 			for(var i=0 ; i < list.length ; i ++){
 				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i].price +"_" + obj.id.split("_")[1] + "'>"+ list[i].productname +"</option>"); 
 			}

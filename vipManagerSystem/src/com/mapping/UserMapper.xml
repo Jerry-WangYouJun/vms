@@ -49,8 +49,8 @@
       <if test="username != null and username != ''" >
         and username like concat(concat('%',#{username}),'%') 
       </if>
-     
-  </select>
+      order by id desc
+  </select> 
   
     <select id="selectUserCountByWhere" resultType="java.lang.Long" parameterType="java.util.HashMap" >
     select 
@@ -79,6 +79,9 @@
        #{birthday,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{balance,jdbcType=DOUBLE}, #{sex,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR} , #{score,jdbcType=INTEGER})
+       <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+		</selectKey>
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.User" >
     insert into t_user

@@ -54,14 +54,22 @@ public class RechargeController {
 	@ResponseBody
 	@RequestMapping("/insert")
 	public Integer addRecharge(Recharge recharge ){
+		if(recharge.getUserId() == null ){
+			User user =  new User();
+			user.setUsername(recharge.getUserName());
+			user.setScore(recharge.getTotalPoints() + "");
+			user.setBalance(recharge.getTotalMoney() + "");
+			userDao.insert(user);
+			recharge.setUserId(user.getId());
+		}
 		int count  = this.rechargeService.addRecharge(recharge) ;
 		if(count > 0 ){
-			User user = userDao.selectByPrimaryKey(recharge.getUserId());
-			if(user!= null){
-				user.setBalance(recharge.getTotalMoney() + "");
-				user.setScore(recharge.getTotalPoints()+ "");
-			}
-			userDao.updateByPrimaryKey(user);
+				User user = userDao.selectByPrimaryKey(recharge.getUserId());
+				if(user!= null){
+					user.setBalance(recharge.getTotalMoney() + "");
+					user.setScore(recharge.getTotalPoints()+ "");
+				}
+				userDao.updateByPrimaryKey(user);
 		}
 		 return count;
 	}

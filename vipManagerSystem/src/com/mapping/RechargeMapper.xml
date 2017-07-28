@@ -51,7 +51,7 @@
 		<if test="userId != null and userId != ''">
 			and userId = #{userId}
 		</if>
-		order by userId , rechargetime desc 
+		order by rechargetime desc 
 	</select>
 
 	<select id="selectByWhere" resultMap="BaseResultMap"

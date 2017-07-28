@@ -20,8 +20,9 @@ textarea {
 }
 </style>
 <script type="text/javascript">
+
+ 	 
 	function doServlet() {
-		if(checkUser($("#userName").val())){
 			 var totalMoney = $("#totalMoney").val();
 			 var totalPoints = $("#totalPoints").val();
 			$.ajax({
@@ -39,7 +40,6 @@ textarea {
 					$.messager.alert('提示', "系统产生错误,请联系管理员!", "error");
 				}
 			});
-		}
 	}
 	
 	 function checkUser(userName){
@@ -53,8 +53,12 @@ textarea {
 				async : false,
 				success : function(data) {
 					  if(data <= 0 ){
-						    alert("该用户不存在");
-						    flag = false ;
+						  $("#totalMoney").val(0);
+					      $("#totalPoints").val(0);
+					      $("#user_namelist_div").html("");
+						  $("#user_namelist_div").hide();
+						  getTotalMoney();
+						  getBill();
 					  }else{
 						   flag = true;
 					  }
@@ -82,15 +86,15 @@ textarea {
 										for (var i = 0; i < data.length; i++) {
 											htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
 													+ (i + 1)
-													+ "_dName' , "+ data[i].balance  +" , "+ data[i].score +")\">";
+													+ "_dName' , "+ data[i].balance  +" , "+ data[i].score + "," + (i+1) +" )\">";
 											htmlStr += "<td id=\""
 													+ (i + 1)
 													+ "_dName\" style=\"text-align:left;\">";
 											htmlStr += data[i].username;
 											htmlStr += "</td>";
-											htmlStr +="<input type=\"hidden\" name = 'userId'  value = \"" + data[i].id +"\"/>"
-											htmlStr +="<input type=\"hidden\" id = 'balance'  value = \"" + data[i].balance +"\"/>"
-											htmlStr +="<input type=\"hidden\" id = 'score'  value = \"" + data[i].score +"\"/>"
+											htmlStr +="<input type=\"hidden\"  name = 'userId'  value = \"" + data[i].id +"\"/>"
+											htmlStr +="<input type=\"hidden\" id = 'balance_"+  (i+1) +"'   value = \"" + data[i].balance +"\"/>"
+											htmlStr +="<input type=\"hidden\" id = 'score_"+  (i+1) +"'  value = \"" + data[i].score +"\"/>"
 											htmlStr += "</tr>";
 										}
 										htmlStr += "</table>";
@@ -110,10 +114,11 @@ textarea {
 				});
 	});
 	
-	 function selectDName(tdId , balance , score){
+	 function selectDName(tdId , balance , score , selectIndex){
 	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
 	        $("#totalMoney").val(balance);
 	        $("#totalPoints").val(score);
+	        $("#selectIndex").val(selectIndex);
 	      $("#user_namelist_div").hide();
 	  }
 	 
@@ -126,6 +131,7 @@ textarea {
 			    	  billNum += parseFloat(this.childNodes[4].childNodes[0].value) ;
 			      }
 		   });	
+		   
 		   $("#bill").val(billSum);
 		   $("#count").val(billNum);
 	 }
@@ -135,14 +141,14 @@ textarea {
 	      //第二个加数  
 	      var giftMoney = parseInt(document.getElementById("giftMoney").value == "" ? 0 : document.getElementById("giftMoney").value);
 	      
-	      var totalMoney = parseInt(document.getElementById("balance").value == "" ? 0 : document.getElementById("balance").value);  
+	      var totalMoney = parseInt($("#balance_"+ $("#selectIndex").val()).val() == "" || $("#balance_"+ $("#selectIndex").val()).val() == undefined  ? 0 : $("#balance_"+ $("#selectIndex").val()).val() );  
 		 
 	      $("#totalMoney").val(actualMoney + giftMoney + totalMoney);
 	 }
 	 
 	 function getTotalPoints(){
 		 var creditPoints = parseInt(document.getElementById("creditPoints").value == "" ? 0 : document.getElementById("creditPoints").value);  
-	      var totalPoints = parseInt(document.getElementById("score").value == "" ? 0 : document.getElementById("score").value);  
+	      var totalPoints = parseInt($("#score_"+ $("#selectIndex").val()).val() == "" || $("#score_"+ $("#selectIndex").val()).val() == undefined  ? 0 : $("#score_"+ $("#selectIndex").val()).val());  
 	      //求和  
 	      var c = creditPoints + totalPoints;  
 		  $("#totalPoints").val(c);
@@ -154,9 +160,10 @@ textarea {
 	<form id="rechargeForm"
 		action="${basePath}/admin/OrderServlet?flag=insert" method="post">
 		<table width="100%" >
+		     <input type="hidden" name="selectIndex" id="selectIndex"  />
 			<tr>
 				<td>客户：</td>
-				<td><input type="text" name="userName" id="userName" size="14"  />
+				<td><input type="text" name="userName" id="userName" size="14"  onchange="checkUser(this.value)" />
 					<div id="user_namelist_div"
 						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
 						<table class="list_tab">

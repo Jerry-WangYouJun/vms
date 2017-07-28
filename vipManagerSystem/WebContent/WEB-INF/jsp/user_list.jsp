@@ -32,9 +32,9 @@
 				}],
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
-				    {field : 'vip',title : 'VIP卡号',halign:'center',width : 80},
-				    {field : 'username',title : '用户姓名',halign:'center',width : 80},
-				    {field : 'sex',title : '性别',halign:'center',width : 80,formatter:function(value,rowData,rowIndex){
+				    {field : 'vip',title : 'VIP卡号',halign:'center',width : 100},
+				    {field : 'username',title : '用户姓名',halign:'center',width : 100},
+				    {field : 'sex',title : '性别',halign:'center',width : 100,formatter:function(value,rowData,rowIndex){
 				    		if(value == "1"){
 				    			return "男";
 				    		}else if(value == "0"){
@@ -43,11 +43,11 @@
 				    			return "";
 				    		}
 				    }},
-				    {field : 'birthday',title : '生日',halign:'center',width : 80},
-				    {field : 'address',title : '地址',halign:'center',width : 80},
+				    {field : 'birthday',title : '生日',halign:'center',width : 100},
+				    {field : 'address',title : '地址',halign:'center',width : 250},
 				    {field : 'telephone',title : '电话',halign:'center',width : 100},
-				    {field : 'balance',title : '余额',halign:'center',width : 200},
-				    {field : 'score',title : '积分',halign:'center',width : 200},
+				    {field : 'balance',title : '余额',halign:'center',width : 100},
+				    {field : 'score',title : '积分',halign:'center',width : 100},
 				    {field : 'level',title : 'VIP等级',halign:'center',width : 120}
 				]]
 			});

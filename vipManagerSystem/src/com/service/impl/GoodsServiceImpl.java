@@ -37,10 +37,6 @@ public class GoodsServiceImpl implements GoodsServiceI {
 
 	@Override
 	public Grid findGoodsList(Goods goods) {
-		String pageIndex = request.getParameter("page");
-		String rowsIndex = request.getParameter("rows");
-		PageHelper.startPage(Integer.parseInt(pageIndex),
-				Integer.parseInt(rowsIndex));
 		Grid grid = new Grid();
 		List<Goods> results = this.goodsDao.selectGoodsByWhere(goods);
 		Long total = this.goodsDao.findGoodsCountByWhere(goods);

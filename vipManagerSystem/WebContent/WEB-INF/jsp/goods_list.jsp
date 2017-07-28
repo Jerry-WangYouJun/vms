@@ -13,7 +13,6 @@
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
-				pagination : true,
 				nowrap: false,
 				toolbar: [{
 					text:'添加',
@@ -144,10 +143,10 @@
 				<td>
 					<select id="producttypecode" name="producttypecode">
 		  				<option value="">---请选择---</option>
-		  				<option value="饮品">---咖啡---</option>
-		  				<option value="点心">---冷饮---</option>
+		  				<option value="咖啡">---咖啡---</option>
+		  				<option value="冷">---冷饮---</option>
 		  				<option value="茶">---茶---</option>
-		  				<option value="本店特色">---本店特色---</option>
+		  				<option value="特色">---本店特色---</option>
 		  			</select>
 				</td>
 				<td>

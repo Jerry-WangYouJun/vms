@@ -1,6 +1,8 @@
 package com.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +62,7 @@ public class OrderController {
 		List<Goods> drinkList  =  new ArrayList<>();
 		List<Goods> foodList  =  new ArrayList<>();
 		List<Goods> specialList  =  new ArrayList<>();
+		List<Goods> teaList  =  new ArrayList<>();
 		for (Goods good : goodList) {
 			 if(Constant.DRINK.equals(good.getProducttype())){
 				 drinkList.add(good);
@@ -67,14 +70,18 @@ public class OrderController {
 				 foodList.add(good);
 			 }else if(Constant.SPECIAL.equals(good.getProducttype())){
 				 specialList.add(good);
+			 }else if(Constant.TEA.equals(good.getProducttype())){
+				 teaList.add(good);
 			 }
 		}
-		
+		 String date = new SimpleDateFormat("yyyyMMddhhmm").format(new Date());
 		ModelAndView mv = new ModelAndView("order_add");
 		JSONObject json = new JSONObject();
 		json.put("food" , foodList);
 		json.put("drink", drinkList);
 		json.put("special",specialList);
+		json.put("tea", teaList);
+		json.put("orderNo", date);
 		mv.addObject("model", json);
 		return mv;
 	}
@@ -82,9 +89,10 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping("/insert")
 	public Integer addOrder(Order order ){
+		 String date = new SimpleDateFormat("yyyyMMddhhmm").format(new Date());
+		 order.setOrderNo(date);
 		 return this.orderService.addOrder(order);
 	}
-	
 	@ResponseBody
 	@RequestMapping("/delete")
 	public Integer deleteOrder(@RequestParam Integer id ){
@@ -110,6 +118,7 @@ public class OrderController {
 		List<Goods> drinkList  =  new ArrayList<>();
 		List<Goods> foodList  =  new ArrayList<>();
 		List<Goods> specialList  =  new ArrayList<>();
+		List<Goods> teaList  =  new ArrayList<>();
 		for (Goods good : goodList) {
 			 if(Constant.DRINK.equals(good.getProducttype())){
 				 drinkList.add(good);
@@ -117,6 +126,8 @@ public class OrderController {
 				 foodList.add(good);
 			 }else if(Constant.SPECIAL.equals(good.getProducttype())){
 				 specialList.add(good);
+			 }else if(Constant.TEA.equals(good.getProducttype())){
+				 teaList.add(good);
 			 }
 		}
 		JSONObject json = new JSONObject();
@@ -124,6 +135,7 @@ public class OrderController {
 		json.put("drink", drinkList);
 		json.put("special",specialList);
 		json.put("detail", listDetail);
+		json.put("tea", teaList);
 		model.put("order",order);//userlist是个Arraylist之类的  
 		model.put("model", json);
 		return new ModelAndView("order_update", model); 

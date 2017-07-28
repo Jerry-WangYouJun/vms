@@ -68,17 +68,17 @@ textarea {
 	    var newNameTD=newTR.insertCell(1);
 	    //添加列内容
 	    
-		newNameTD.innerHTML = "<select style='width:70px;' name='way_." + xuhao + "' id='way_" + xuhao + "' onchange='change(this)'>"
+		newNameTD.innerHTML = "<select style='width:100px;' name='way_." + xuhao + "' id='way_" + xuhao + "' onchange='change(this)'>"
 						 +" <option  value=''>请选择</option> "				
-						 +" <option value='咖啡'>---咖啡---</option> "
-						 +" <option value='点心'>冷饮</option>  "
-						 +"<option value='茶'>---茶---</option>"
-						 +" <option value='特色'>特色</option>  "
+						 +" <option value='咖啡'>--咖啡--</option> "
+						 +" <option value='冷饮'>--冷饮--</option>  "
+						 +"  <option value='茶'>--茶--</option>"
+						 +" <option value='特色'>--特色--</option>  "
 						 +"  </select>";
 		//添加列:品名
 	    var newEmailTD=newTR.insertCell(2);
 	    //添加列内容
-	    newEmailTD.innerHTML =  "<select style='width:70px;' name='product_" + xuhao + "' id='product_" + xuhao + "'  onchange='changePrice(this)' >"
+	    newEmailTD.innerHTML =  "<select style='width:100px;' name='product_" + xuhao + "' id='product_" + xuhao + "'  onchange='changePrice(this)' >"
 		 +"  </select>";
 	    //添加列:单价
 	    var newEmailTD=newTR.insertCell(3);
@@ -106,12 +106,14 @@ textarea {
 			$("#price_" + obj.id.split("_")[1]).empty();
 			var str = ${model};
 			var list  ; 
-		 if(obj.value=='饮品'){
+		 if(obj.value=='咖啡'){
 			  list = str.drink;
-		 }else if(obj.value=='点心'){
+		 }else if(obj.value=='冷饮'){
 			   list = str.food;
 		 }else if(obj.value=='特色'){
 			   list = str.special;
+		 }else if(obj.value=='茶'){
+			 list = str.tea;
 		 }
 			for(var i=0 ; i < list.length ; i ++){
 				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i].price +"_" + obj.id.split("_")[1] + "'>"+ list[i].productname +"</option>"); 
@@ -186,6 +188,8 @@ textarea {
 								}
 							});
 				});
+			var str = ${model};
+			 $("#orderNo").val(str.orderNo);
 	});
 	
 	 function selectDName(tdId){
@@ -237,7 +241,7 @@ textarea {
 					</div>
 				</td>
 				<td>订单编码：</td>
-				<td><input type="text" name="orderNo" size="14" /></td>
+				<td><input type="text" id = "orderNo" name="orderNo" size="14" disabled="disabled"/></td>
 			</tr>
 			<tr>
 				<td>应收总价：</td>
