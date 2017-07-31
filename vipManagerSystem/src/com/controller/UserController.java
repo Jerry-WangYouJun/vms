@@ -151,7 +151,7 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value ="/ajaxUserName" )
+	@RequestMapping(value ="/ajaxUserName" ,produces="text/html;charset=UTF-8;" )
 	public String ajaxUserName( String userName , HttpServletResponse response  , HttpServletRequest request) throws Exception {
 		System.out.println(userName);
 		Map params = new HashMap();

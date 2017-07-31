@@ -36,7 +36,7 @@
 				    {field : 'actualMoney',title : '实收金额',halign:'center',width : 80},
 				    {field : 'giftMoney',title : '赠送金额',halign:'center',width : 80},
 				    {field : 'totalMoney',title : '余额',halign:'center',width : 100},
-				    {field : 'creditPoints',title : '充值节分',halign:'center',width : 100},
+				    {field : 'creditPoints',title : '充值积分',halign:'center',width : 100},
 				    {field : 'totalPoints',title : '剩余积分',halign:'center',width : 100},
 				    {field : 'rechargetime',title : '充值时间',halign:'center',width : 100}
 				]]

@@ -29,36 +29,36 @@
 		parameterType="com.pojo.Recharge">
 		select
 		count(1)
-		from t_recharge
-		where 1=1
+		from t_recharge r , t_user u
+		where 1=1 and r.userId = u.id
 		<if test="id != null and id != ''">
-			and ID = #{id}
+			and r.ID = #{id}
 		</if>
 		<if test="userId != null and userId != ''">
-			and userId = #{userId}
+			and r.userId = #{userId}
 		</if>
 	</select>
 
 	<select id="selectRechargeByWhere" resultMap="BaseResultMap"
 		parameterType="com.pojo.Recharge">
 		select
-		<include refid="Base_Column_List" />
-		from t_recharge
-		where 1=1
+		r.*
+		from t_recharge r , t_user u
+		where 1=1 and r.userId = u.id
 		<if test="id != null and id != ''">
-			and ID = #{id}
+			and r.ID = #{id}
 		</if>
 		<if test="userId != null and userId != ''">
-			and userId = #{userId}
+			and r.userId = #{userId}
 		</if>
-		order by rechargetime desc 
+		order by r.rechargetime desc 
 	</select>
 
 	<select id="selectByWhere" resultMap="BaseResultMap"
 		parameterType="java.util.HashMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_recharge
+		from t_recharger , t_user u
 		where 1=1
 		<if test="id != null and id != ''">
 			and ID = #{id}

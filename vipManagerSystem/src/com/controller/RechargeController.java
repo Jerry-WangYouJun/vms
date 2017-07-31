@@ -57,6 +57,7 @@ public class RechargeController {
 		if(recharge.getUserId() == null ){
 			User user =  new User();
 			user.setUsername(recharge.getUserName());
+			user.setSex("1");
 			userDao.insert(user);
 			recharge.setUserId(user.getId());
 		}
@@ -74,6 +75,8 @@ public class RechargeController {
 	@RequestMapping("/updateinit")
 	public ModelAndView updateRechargeInit(@RequestParam int id ){
 		Recharge recharge= this.rechargeDao.selectByPrimaryKey(id);
+		User user = userDao.selectByPrimaryKey(recharge.getUserId());
+		recharge.setUserName(user.getUsername());
 		Map<String,Object> model =new HashMap<String,Object>();
 		model.put("recharge",recharge);//userlist是个Arraylist之类的  
 		return new ModelAndView("recharge_update", model); 

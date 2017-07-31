@@ -58,7 +58,7 @@ textarea {
 					      $("#user_namelist_div").html("");
 						  $("#user_namelist_div").hide();
 						  getTotalMoney();
-						  getBill();
+						  getTotalPoints();
 					  }else{
 						   flag = true;
 					  }
