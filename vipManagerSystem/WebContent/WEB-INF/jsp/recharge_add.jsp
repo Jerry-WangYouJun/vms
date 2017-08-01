@@ -141,14 +141,14 @@ textarea {
 	      //第二个加数  
 	      var giftMoney = parseInt(document.getElementById("giftMoney").value == "" ? 0 : document.getElementById("giftMoney").value);
 	      
-	      var totalMoney = parseInt($("#balance_"+ $("#selectIndex").val()).val() == "" || $("#balance_"+ $("#selectIndex").val()).val() == undefined  ? 0 : $("#balance_"+ $("#selectIndex").val()).val() );  
-		 
+	      var totalMoney = parseInt($("#balance_"+ $("#selectIndex").val()).val() == "" || $("#balance_"+ $("#selectIndex").val()).val() == "undefined" || $("#balance_"+ $("#selectIndex").val()).val() == undefined   ? 0 : $("#balance_"+ $("#selectIndex").val()).val() );  
+	      //alert($("#balance_"+ $("#selectIndex").val()).val());
 	      $("#totalMoney").val(actualMoney + giftMoney + totalMoney);
 	 }
 	 
 	 function getTotalPoints(){
 		 var creditPoints = parseInt(document.getElementById("creditPoints").value == "" ? 0 : document.getElementById("creditPoints").value);  
-	      var totalPoints = parseInt($("#score_"+ $("#selectIndex").val()).val() == "" || $("#score_"+ $("#selectIndex").val()).val() == undefined  ? 0 : $("#score_"+ $("#selectIndex").val()).val());  
+	      var totalPoints = parseInt($("#score_"+ $("#selectIndex").val()).val() == "" || $("#score_"+ $("#selectIndex").val()).val() == "undefined" || $("#score_"+ $("#selectIndex").val()).val() == undefined  ? 0 : $("#score_"+ $("#selectIndex").val()).val());  
 	      //求和  
 	      var c = creditPoints + totalPoints;  
 		  $("#totalPoints").val(c);
