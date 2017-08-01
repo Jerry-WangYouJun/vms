@@ -116,9 +116,9 @@ textarea {
 	
 	 function selectDName(tdId , balance , score , selectIndex){
 	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
-	        $("#totalMoney").val(balance);
-	        $("#totalPoints").val(score);
 	        $("#selectIndex").val(selectIndex);
+	        getTotalMoney();
+			  getTotalPoints();
 	      $("#user_namelist_div").hide();
 	  }
 	 
