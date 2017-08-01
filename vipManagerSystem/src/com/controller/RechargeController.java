@@ -62,6 +62,10 @@ public class RechargeController {
 			recharge.setUserId(user.getId());
 		}
 		int count  = this.rechargeService.addRecharge(recharge) ;
+		User user = userDao.selectByPrimaryKey(recharge.getUserId());
+		user.setScore(recharge.getTotalPoints() + "");
+		user.setBalance(recharge.getTotalMoney()+"");
+		userDao.updateByPrimaryKey(user);
 		return count;
 	}
 	

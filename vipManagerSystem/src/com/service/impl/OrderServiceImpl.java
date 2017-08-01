@@ -21,6 +21,7 @@ import com.mapping.OrderMapper;
 import com.mapping.UserMapper;
 import com.pojo.Order;
 import com.pojo.OrderDetail;
+import com.pojo.User;
 import com.service.OrderServiceI;
 
 @Service
@@ -76,6 +77,13 @@ public class OrderServiceImpl implements OrderServiceI {
 		String  orderDate = (new SimpleDateFormat("yyyy-MM-dd")).format(date);  
 		order.setOrderDate(orderDate);
 		int count = orderDao.insert(order);
+		if("01".equals(order.getPillType())){
+			User user = userDao.selectByPrimaryKey(order.getUserId());
+			if(user != null){
+				user.setBalance((new Double(user.getBalance()) - order.getPill())+"");
+				userDao.updateByPrimaryKey(user);
+			}
+		}
 		for (OrderDetail detail : order.getOrderDetailList()) {
 				if(detail.getGoodId() != null && detail.getGoodId() > 0){
 					detail.setOrderId(order.getId());

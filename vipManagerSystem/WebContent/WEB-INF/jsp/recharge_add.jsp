@@ -86,13 +86,13 @@ textarea {
 										for (var i = 0; i < data.length; i++) {
 											htmlStr += "<tr class=\"row\" onclick=\"selectDName('"
 													+ (i + 1)
-													+ "_dName' , "+ data[i].balance  +" , "+ data[i].score + "," + (i+1) +" )\">";
+													+ "_dName' , "+ data[i].balance  +" , "+ data[i].id + "," + (i+1) +" )\">";
 											htmlStr += "<td id=\""
 													+ (i + 1)
 													+ "_dName\" style=\"text-align:left;\">";
 											htmlStr += data[i].username;
 											htmlStr += "</td>";
-											htmlStr +="<input type=\"hidden\"  name = 'userId'  value = \"" + data[i].id +"\"/>"
+											htmlStr +="<input type=\"hidden\" id = 'id_" + (i+1) + "' value = \"" + data[i].id +"\"/>"
 											htmlStr +="<input type=\"hidden\" id = 'balance_"+  (i+1) +"'   value = \"" + data[i].balance +"\"/>"
 											htmlStr +="<input type=\"hidden\" id = 'score_"+  (i+1) +"'  value = \"" + data[i].score +"\"/>"
 											htmlStr += "</tr>";
@@ -114,9 +114,10 @@ textarea {
 				});
 	});
 	
-	 function selectDName(tdId , balance , score , selectIndex){
+	 function selectDName(tdId , balance , id , selectIndex){
 	        $("[id='userName']").val(document.getElementById(tdId).innerHTML);
 	        $("#selectIndex").val(selectIndex);
+	        $("#userId").val(id);
 	        getTotalMoney();
 			  getTotalPoints();
 	      $("#user_namelist_div").hide();
@@ -165,6 +166,7 @@ textarea {
 				<td>客户：</td>
 				<td><input type="text" name="userName" id="userName" size="14"  onchange="checkUser(this.value)"/>
 				<input type="hidden" name="selectIndex" id="selectIndex"  />
+					
 					<div id="user_namelist_div"
 						style="border: 1px solid green; background-color: #EFEFEF; width: 400px; height: 300px; display: none; position: absolute; z-index: 100; overflow-y: scroll; overflow-x: scroll;">
 						<table class="list_tab">

@@ -40,9 +40,8 @@
   
   <select id="selectUserByWhere" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select 
-        u.ID,  u.vip,  u.birthday, u.address, 
-        t.totalMoney balance, u.sex, u.telephone, u.username, u.level , t.totalPoints score , max(t.rechargetime)
-    from t_user u left join t_recharge t  on  u.id = t.userid 
+        <include refid="Base_Column_List" />
+    from t_user 
     where  1=1 
        <if test="vip != null and vip != '' " >
         and vip like concat(concat('%',#{vip}),'%') 
@@ -50,22 +49,19 @@
       <if test="username != null and username != ''" >
         and username like concat(concat('%',#{username}),'%') 
       </if>
-      group by u.id  order by u.id desc 
+       order by id desc 
   </select> 
   
     <select id="selectUserCountByWhere" resultType="java.lang.Long" parameterType="java.util.HashMap" >
-    select COUNT(1 ) from (
-		select 
-    	max(t.rechargetime)
-    from t_user u left join t_recharge t  on  u.id = t.userid 
-    where  1=1
+	    select COUNT(1 ) 
+	    from t_user 
+	    where  1=1
         <if test="vip != null and vip != '' " >
         and vip like concat(concat('%',#{vip}),'%') 
       </if>
       <if test="username != null and username != ''" >
        and username like concat(concat('%',#{username}),'%') 
       </if>
-       group by u.id  ) a 
   </select> 
   
   
