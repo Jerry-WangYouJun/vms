@@ -1,7 +1,6 @@
 package com.service.impl;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,11 @@ import org.springframework.stereotype.Service;
 import com.core.StringUtils;
 import com.core.model.Grid;
 import com.github.pagehelper.PageHelper;
+import com.mapping.GoodsMapper;
 import com.mapping.OrderDetailMapper;
 import com.mapping.OrderMapper;
 import com.mapping.UserMapper;
+import com.pojo.Goods;
 import com.pojo.Order;
 import com.pojo.OrderDetail;
 import com.pojo.User;
@@ -33,6 +34,8 @@ public class OrderServiceImpl implements OrderServiceI {
 	
 	@Resource
 	private UserMapper userDao;
+	@Resource
+	private GoodsMapper goodDao;
 	@Autowired
 	private HttpServletRequest request;
 
@@ -85,8 +88,12 @@ public class OrderServiceImpl implements OrderServiceI {
 			}
 		}
 		for (OrderDetail detail : order.getOrderDetailList()) {
-				if(detail.getGoodId() != null && detail.getGoodId() > 0){
+				if(detail.getProductname() != null  ){
+					Goods good = new Goods();
+					good.setProductname(detail.getProductname().split("_")[2]);
+					List<Goods> list = goodDao.selectGoodsByWhere(good);
 					detail.setOrderId(order.getId());
+					detail.setGoodId(list.get(0).getId());
 					orderDetail.insert(detail);
 				}
 		}

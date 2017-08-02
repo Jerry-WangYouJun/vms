@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,7 +58,7 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping("/insertInit")
-	public ModelAndView addInitOrder(){
+	public ModelAndView addInitOrder(HttpSession httpSession){
 		List<Goods> goodList =this.goodsService.findByAjax("");
 		List<Goods> drinkList  =  new ArrayList<>();
 		List<Goods> foodList  =  new ArrayList<>();
@@ -82,7 +83,7 @@ public class OrderController {
 		json.put("special",specialList);
 		json.put("tea", teaList);
 		json.put("orderNo", date);
-		mv.addObject("model", json);
+		httpSession.setAttribute("model", json);  
 		return mv;
 	}
 	

@@ -193,7 +193,7 @@ textarea {
 			 list = model.tea;
 		 }
 			for(var i=0 ; i < list.length ; i ++){
-				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i].price +"_" + obj.id.split("_")[1] + "'>"+ list[i].productname +"</option>"); 
+				$("#product_" + obj.id.split("_")[1]).append("<option value='"+ list[i].price +"_" + obj.id.split("_")[1] + "_" + list[i].productname + "'>"+ list[i].productname +"</option>"); 
 			}
 			$("#price_" + obj.id.split("_")[1]).val(list[0].price);
 			$("#id_" + obj.id.split("_")[1]).val(list[0].id);
