@@ -53,6 +53,8 @@
 	<form:form id="userForm" action="${basePath }/user/user_update" modelAttribute="user" method="post">
 		<input type="hidden" name="_method" value="PUT"/>
 		<form:hidden path="id"/>
+		<form:hidden path="score"/>
+		<form:hidden path="balance"/>
 		<table width="100%">
 		  	<tr>
 		  		<td>卡号：</td>
